@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATAA 2026 Welcome — Full Color Logo</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #D4940A;
+    --amber-light: #F5DFA0;
+    --teal: #0A8F7F;
+    --teal-light: #A0E5D9;
+    --bg: #0C0E13;
+    --card: #13161D;
+    --border: #2A2D36;
+    --t1: #E8E6E1;
+    --t2: #9A978F;
+    --t3: #5C5A54;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Ambient glows */
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 50% 85%, rgba(212,148,10,0.06), transparent),
+      radial-gradient(ellipse 500px 400px at 70% 30%, rgba(10,143,127,0.05), transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Road surface */
+  .road {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #15181F;
+    border-top: 2px solid #2A2D36;
+    border-bottom: 2px solid #2A2D36;
+    z-index: 1;
+  }
+  .road::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    transform: translateY(-50%);
+    background: repeating-linear-gradient(
+      to right,
+      #D4940A44 0px, #D4940A44 30px,
+      transparent 30px, transparent 60px
+    );
+    animation: roadScroll 1.5s linear infinite;
+  }
+  @keyframes roadScroll {
+    from { transform: translateY(-50%) translateX(0); }
+    to { transform: translateY(-50%) translateX(-60px); }
+  }
+
+  /* Ground line */
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, #0A0C10, #0F1118);
+    z-index: 0;
+  }
+
+  /* TRUCK SVG */
+  .truck-container {
+    position: absolute;
+    bottom: 88px;
+    z-index: 2;
+    animation: truckDrive 12s linear infinite;
+  }
+  @keyframes truckDrive {
+    0% { left: -500px; }
+    100% { left: 1400px; }
+  }
+
+  /* Slight bounce */
+  .truck-bounce {
+    animation: bounce 0.4s ease-in-out infinite alternate;
+  }
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2px); }
+  }
+
+  /* TEXT */
+  .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+  }
+
+  .eyebrow {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--t3);
+    margin-bottom: 16px;
+    animation: fadeIn 1s 0.3s ease both;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 1.15;
+    text-align: center;
+    max-width: 900px;
+    animation: fadeIn 1s 0.6s ease both;
+  }
+  h1 .line1 {
+    display: block;
+    color: var(--t1);
+  }
+  h1 .line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--amber-light), var(--teal-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 34px;
+    color: var(--t2);
+    font-weight: 400;
+    margin-top: 24px;
+    letter-spacing: 0.04em;
+    animation: fadeIn 1s 0.9s ease both;
+  }
+
+  .event-badge {
+    margin-top: 28px;
+    padding: 10px 28px;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeIn 1s 1.2s ease both;
+  }
+  .event-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(10,143,127,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(10,143,127,0); }
+  }
+  .event-badge span {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--t2);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Floating particles */
+  .particles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+  }
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-300px) translateX(40px); opacity: 0; }
+  }
+
+  /* Headlight glow on truck */
+  .headlight-glow {
+    position: absolute;
+    bottom: 100px;
+    width: 200px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(245,223,160,0.08), transparent);
+    z-index: 1;
+    animation: truckDrive 12s linear infinite;
+    pointer-events: none;
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    padding: 10px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,12,16,0.9);
+    border-top: 1px solid var(--border);
+  }
+  .bottom-bar span {
+    font-size: 18px;
+    color: var(--t3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- Floating particles -->
+  <div class="particles">
+    <div class="particle" style="left:10%; bottom:140px; width:3px; height:3px; background:#D4940A; animation-duration:6s; animation-delay:0s;"></div>
+    <div class="particle" style="left:25%; bottom:100px; width:2px; height:2px; background:#0A8F7F; animation-duration:8s; animation-delay:1s;"></div>
+    <div class="particle" style="left:45%; bottom:120px; width:2.5px; height:2.5px; background:#A0E5D9; animation-duration:7s; animation-delay:2s;"></div>
+    <div class="particle" style="left:65%; bottom:130px; width:2px; height:2px; background:#F5DFA0; animation-duration:9s; animation-delay:0.5s;"></div>
+    <div class="particle" style="left:80%; bottom:110px; width:3px; height:3px; background:#3DC4B0; animation-duration:6.5s; animation-delay:3s;"></div>
+    <div class="particle" style="left:90%; bottom:140px; width:2px; height:2px; background:#D4940A; animation-duration:7.5s; animation-delay:1.5s;"></div>
+    <div class="particle" style="left:35%; bottom:100px; width:2px; height:2px; background:#0A8F7F; animation-duration:8.5s; animation-delay:4s;"></div>
+    <div class="particle" style="left:55%; bottom:135px; width:2.5px; height:2.5px; background:#F5DFA0; animation-duration:7s; animation-delay:2.5s;"></div>
+  </div>
+
+  <!-- Text content -->
+  <div class="content">
+    <div class="eyebrow">ATAA 2026 &middot; Charlotte</div>
+    <h1>
+      <span class="line1">Welcome to</span>
+      <span class="line2">Creating Visuals with AI</span>
+    </h1>
+    <div class="subtitle">How to control the randomness of AI image generation</div>
+    <div class="event-badge">
+      <div class="dot"></div>
+      <span>March 20, 2026 &middot; 8:30–9:00 AM &middot; 30-Min CLE</span>
+    </div>
+  </div>
+
+  <!-- Road -->
+  <div class="road"></div>
+  <div class="ground"></div>
+
+  <!-- Headlight glow (follows truck) -->
+  <div class="headlight-glow" style="margin-left: 380px;"></div>
+
+  <!-- TRACTOR-TRAILER TRUCK -->
+  <div class="truck-container">
+    <div class="truck-bounce">
+      <svg width="420" height="120" viewBox="0 0 420 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- === TRAILER === -->
+        <!-- Trailer body -->
+        <rect x="0" y="14" width="260" height="80" rx="4" fill="#13161D" stroke="#D4940A" stroke-width="1.5"/>
+        <!-- Trailer panel lines -->
+        <line x1="50" y1="18" x2="50" y2="90" stroke="#D4940A" stroke-width="0.5" opacity="0.2"/>
+        <line x1="100" y1="18" x2="100" y2="90" stroke="#D4940A" stroke-width="0.5" opacity="0.2"/>
+        <line x1="150" y1="18" x2="150" y2="90" stroke="#D4940A" stroke-width="0.5" opacity="0.2"/>
+        <line x1="200" y1="18" x2="200" y2="90" stroke="#D4940A" stroke-width="0.5" opacity="0.2"/>
+        <!-- ATAA Logo backdrop -->
+        <circle cx="130" cy="54" r="38" fill="#0C0E13" opacity="0.95"/>
+        <circle cx="130" cy="54" r="38" fill="none" stroke="#D4940A" stroke-width="1.2" opacity="0.5">
+          <animate attributeName="opacity" values="0.5;0.3;0.5" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="130" cy="54" r="40.5" fill="none" stroke="#D4940A" stroke-width="0.4" opacity="0.2">
+          <animate attributeName="opacity" values="0.2;0.08;0.2" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="40.5;42;40.5" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <!-- ATAA Logo - full circular seal, theme-colored -->
+        <svg x="93" y="17" width="74" height="74" viewBox="0 0 1000 1000" opacity="0.9">
+          <defs><clipPath id="logoClip"><circle cx="500" cy="500" r="480"/></clipPath></defs>
+          <g clip-path="url(#logoClip)">
+            <!-- Blue region → dark teal -->
+            <circle cx="500" cy="500" r="480" fill="#0A2E2A"/>
+            <path d="M 902.98 239.21 L 877.47 203.51 L 844.31 165.57 L 808.29 132.09 L 771.31 104.04 L 734.33 81.08 L 687.46 58.13 L 642.19 41.55 L 596.28 29.76 L 553.88 23.06 L 446.12 23.06 L 413.60 27.84 L 373.11 37.09 L 327.52 52.07 L 277.47 74.71 L 239.21 97.02 L 203.51 122.53 L 165.57 155.69 L 132.09 191.71 L 104.04 228.69 L 81.08 265.67 L 58.13 312.54 L 41.55 357.81 L 29.76 403.72 L 23.06 446.12 L 23.06 553.88 L 27.84 586.40 L 37.09 626.89 L 52.07 672.48 L 74.71 722.53 L 98.62 762.70 L 118.38 745.80 L 179.60 703.40 L 229.01 674.07 L 296.92 640.28 L 359.09 614.77 L 391.29 604.57 L 397.66 601.06 L 430.18 592.14 L 437.51 588.63 L 445.48 587.67 L 452.18 584.17 L 460.15 583.53 L 501.28 571.41 L 510.20 570.78 L 518.17 567.59 L 529.01 566.63 L 579.70 555.15 L 635.81 546.23 L 704.99 537.94 L 837.94 529.65 L 929.76 529.33 L 978.85 531.24 L 979.17 471.94 L 972.16 413.60 L 963.87 376.62 L 954.30 345.06 L 939.96 308.08 L 922.74 272.69 Z" fill="#0A2E2A"/>
+            <!-- Red regions → dark amber -->
+            <path d="M 974.71 567.27 L 951.43 567.59 L 931.67 570.78 L 910.31 572.37 L 904.25 574.60 L 890.86 575.88 L 881.30 578.75 L 867.27 580.66 L 860.26 583.53 L 851.01 584.80 L 844.00 587.67 L 835.39 588.63 L 827.74 592.14 L 820.40 593.09 L 800.32 600.74 L 794.26 601.70 L 749.95 618.60 L 712.65 635.18 L 699.57 642.51 L 694.16 644.10 L 675.66 654.94 L 669.93 656.85 L 667.38 659.40 L 647.29 669.93 L 601.70 698.94 L 599.15 701.81 L 594.05 703.40 L 585.76 710.73 L 576.51 716.15 L 568.54 723.17 L 563.76 725.72 L 542.08 742.30 L 506.06 772.58 L 478.96 797.45 L 436.56 841.13 L 401.81 882.89 L 367.69 932.31 L 355.58 953.35 L 354.94 957.49 L 376.62 963.87 L 406.91 970.88 L 433.37 975.35 L 471.94 979.17 L 528.06 979.17 L 561.85 975.98 L 609.35 967.38 L 635.81 960.36 L 661.32 952.07 L 706.59 933.26 L 734.33 918.92 L 757.28 905.21 L 796.49 877.47 L 834.43 844.31 L 850.69 827.74 L 869.50 806.38 L 888.31 782.15 L 902.98 760.79 L 918.92 734.33 L 933.26 706.59 L 950.80 664.82 L 960.36 635.81 L 967.38 609.35 L 973.11 580.98 Z" fill="#6B4D06"/>
+            <path d="M 977.90 543.68 L 929.76 545.59 L 904.57 548.78 L 873.65 550.37 L 859.62 553.24 L 840.49 554.20 L 835.71 556.11 L 806.69 558.66 L 792.67 562.17 L 781.19 562.81 L 768.12 566.31 L 754.41 567.27 L 745.80 570.14 L 730.50 572.05 L 723.80 574.60 L 711.69 575.88 L 701.17 579.38 L 690.65 580.34 L 683.00 583.21 L 670.88 584.80 L 665.78 587.35 L 654.62 588.95 L 646.97 592.14 L 637.73 593.41 L 631.99 596.28 L 623.38 597.56 L 616.68 600.43 L 609.03 601.70 L 569.82 613.82 L 565.04 616.68 L 542.08 623.38 L 529.97 628.80 L 508.61 635.81 L 473.86 651.43 L 467.48 653.03 L 463.97 655.90 L 449.95 661.32 L 436.88 668.33 L 431.46 669.61 L 428.59 672.48 L 423.80 673.75 L 354.30 712.33 L 319.87 736.24 L 316.37 737.51 L 269.50 772.26 L 244.95 792.99 L 194.26 841.45 L 180.55 857.70 L 193.62 869.50 L 217.85 888.31 L 249.42 909.35 L 251.33 909.35 L 274.60 881.62 L 314.13 839.21 L 369.61 788.20 L 399.89 763.66 L 427.31 744.21 L 433.69 738.15 L 438.47 735.92 L 465.57 716.47 L 469.71 714.88 L 499.68 695.11 L 534.75 674.71 L 565.99 659.40 L 568.23 657.17 L 595.01 644.42 L 599.79 643.15 L 602.98 640.60 L 609.03 639.00 L 623.70 631.67 L 639.32 626.25 L 654.62 618.92 L 673.11 613.18 L 677.90 610.31 L 686.18 608.40 L 704.04 601.38 L 710.10 600.43 L 744.85 588.95 L 751.86 587.99 L 759.51 584.80 L 769.08 583.21 L 775.77 580.34 L 785.65 579.06 L 792.67 576.20 L 803.83 574.92 L 831.24 567.91 L 844.00 566.63 L 853.24 563.76 L 871.41 562.17 L 876.20 559.94 L 904.89 557.39 L 909.67 555.15 L 938.04 553.24 L 943.46 551.65 L 975.98 550.05 L 977.58 548.14 Z" fill="#6B4D06"/>
+            <!-- ATAA text and design → amber-light -->
+            <path d="M 683.95 224.55 L 683.00 225.82 L 683.00 227.42 L 685.23 231.24 L 685.87 233.16 L 685.87 236.03 L 685.23 238.26 L 683.00 242.08 L 681.40 248.78 L 678.21 253.88 L 676.94 259.62 L 674.07 263.44 L 673.11 269.18 L 669.93 273.96 L 668.65 279.70 L 665.46 285.12 L 664.19 291.18 L 661.32 295.64 L 660.36 300.43 L 657.17 306.16 L 655.90 311.90 L 653.03 316.68 L 651.43 322.10 L 648.88 326.89 L 647.93 331.99 L 644.42 337.09 L 643.15 343.46 L 641.23 346.33 L 638.68 352.39 L 635.49 357.17 L 630.71 361.00 L 630.07 362.27 L 630.39 364.19 L 632.62 365.46 L 639.32 365.78 L 643.15 365.46 L 665.14 365.78 L 667.38 364.51 L 667.69 362.27 L 664.51 356.85 L 664.51 352.39 L 665.46 349.20 L 667.69 345.38 L 669.61 337.09 L 672.16 332.94 L 673.43 326.25 L 676.94 321.15 L 677.90 314.45 L 679.49 312.86 L 683.95 311.90 L 690.97 312.22 L 722.21 311.90 L 725.08 312.86 L 727.63 315.73 L 729.22 323.06 L 732.41 327.84 L 733.37 333.26 L 736.56 339.64 L 737.83 346.01 L 741.34 351.75 L 741.66 357.17 L 738.47 362.59 L 738.47 364.19 L 739.43 365.46 L 741.02 366.10 L 769.71 365.78 L 770.03 365.46 L 774.81 365.46 L 778.96 366.10 L 780.55 365.46 L 781.51 364.19 L 781.51 362.91 L 779.60 359.72 L 775.45 356.22 L 774.18 353.67 L 772.26 351.75 L 769.39 345.06 L 767.80 343.46 L 766.52 340.91 L 765.89 336.45 L 762.70 331.67 L 761.74 325.93 L 758.55 320.51 L 757.28 315.73 L 754.73 311.26 L 753.45 305.21 L 749.95 299.47 L 748.99 294.05 L 745.80 288.63 L 744.85 284.17 L 741.34 278.11 L 740.38 273.01 L 737.19 267.59 L 736.24 261.85 L 735.28 259.94 L 733.05 257.39 L 732.09 252.28 L 728.59 246.87 L 727.63 241.13 L 724.44 236.03 L 723.49 231.24 L 721.89 227.74 L 719.34 225.50 L 715.52 223.91 L 701.17 224.55 L 685.55 223.91 Z M 701.17 256.43 L 701.49 256.75 L 702.13 256.75 L 703.72 258.34 L 703.72 258.66 L 705.63 260.57 L 705.63 260.89 L 706.27 261.53 L 706.27 262.17 L 706.59 262.49 L 706.59 262.81 L 706.91 263.12 L 706.91 264.40 L 707.23 264.72 L 707.23 266.31 L 707.55 266.63 L 707.55 267.91 L 707.86 268.23 L 707.86 268.54 L 708.18 268.86 L 708.18 269.18 L 708.50 269.50 L 708.50 269.82 L 708.82 270.14 L 708.82 270.46 L 710.41 272.05 L 710.41 272.37 L 711.05 273.01 L 711.05 273.33 L 711.37 273.65 L 711.37 274.28 L 711.69 274.60 L 711.69 276.20 L 712.01 276.51 L 712.01 279.06 L 712.33 279.38 L 712.33 280.34 L 712.65 280.66 L 712.65 280.98 L 712.96 281.30 L 712.96 281.62 L 714.56 283.21 L 714.56 283.53 L 715.20 284.17 L 715.20 284.80 L 715.52 285.12 L 715.52 285.76 L 715.83 286.08 L 715.83 287.04 L 716.15 287.35 L 716.15 288.95 L 716.47 289.27 L 716.47 290.86 L 716.79 291.18 L 716.79 291.50 L 717.11 291.82 L 717.11 292.14 L 717.43 292.45 L 717.43 292.77 L 719.34 294.69 L 719.34 295.01 L 719.66 295.32 L 719.66 295.64 L 719.98 295.96 L 719.98 297.56 L 718.38 299.15 L 717.43 299.15 L 717.11 299.47 L 716.15 299.47 L 715.83 299.15 L 713.92 299.15 L 713.60 298.83 L 709.14 298.83 L 708.82 299.15 L 704.36 299.15 L 704.04 298.83 L 699.89 298.83 L 699.57 299.15 L 694.79 299.15 L 694.47 298.83 L 692.56 298.83 L 692.24 299.15 L 687.46 299.15 L 687.14 298.83 L 686.82 298.83 L 685.55 297.56 L 685.55 296.92 L 685.23 296.60 L 685.23 295.32 L 685.55 295.01 L 685.55 294.05 L 685.87 293.73 L 685.87 292.77 L 686.18 292.45 L 686.18 292.14 L 686.50 291.82 L 686.50 291.18 L 687.14 290.54 L 687.14 290.22 L 688.42 288.95 L 688.42 288.63 L 689.05 287.99 L 689.05 287.67 L 689.37 287.35 L 689.37 287.04 L 689.69 286.72 L 689.69 285.76 L 690.01 285.44 L 690.01 283.85 L 690.33 283.53 L 690.33 282.25 L 690.65 281.93 L 690.65 280.98 L 690.97 280.66 L 690.97 280.34 L 691.29 280.02 L 691.29 279.70 L 691.60 279.38 L 691.60 279.06 L 692.56 278.11 L 692.56 277.79 L 692.88 277.47 L 692.88 277.15 L 693.20 276.83 L 693.20 276.51 L 693.52 276.20 L 693.52 275.56 L 693.84 275.24 L 693.84 274.28 L 694.16 273.96 L 694.16 272.37 L 694.47 272.05 L 694.47 271.09 L 694.79 270.78 L 694.79 270.14 L 695.11 269.82 L 695.11 269.50 L 695.43 269.18 L 695.43 268.86 L 696.39 267.91 L 696.39 267.59 L 697.34 266.63 L 697.34 266.31 L 697.66 265.99 L 697.66 265.67 L 697.98 265.36 L 697.98 264.72 L 698.30 264.40 L 698.30 263.12 L 698.62 262.81 L 698.62 260.89 L 698.94 260.57 L 698.94 259.62 L 699.26 259.30 L 699.26 258.66 L 699.57 258.34 L 699.57 257.70 L 700.53 256.75 L 700.85 256.75 Z M 517.85 224.55 L 516.90 225.82 L 516.90 228.06 L 519.77 232.84 L 520.08 235.39 L 519.13 237.94 L 516.90 241.13 L 515.62 247.82 L 512.75 252.28 L 511.48 258.02 L 508.29 262.81 L 507.01 269.50 L 504.14 274.28 L 503.19 279.06 L 499.68 284.48 L 498.09 291.50 L 495.22 295.96 L 494.26 300.74 L 491.39 305.21 L 489.80 312.22 L 487.25 316.37 L 486.29 320.51 L 483.10 325.93 L 481.83 332.31 L 478.64 336.45 L 477.68 342.19 L 475.45 345.38 L 473.54 350.48 L 470.99 353.99 L 469.71 356.85 L 464.61 361.00 L 463.97 362.27 L 464.29 364.19 L 466.52 365.46 L 497.13 365.46 L 499.04 366.10 L 500.96 365.78 L 502.23 364.82 L 502.55 362.59 L 498.72 357.17 L 498.41 355.90 L 498.72 351.12 L 501.91 344.74 L 503.19 337.73 L 506.38 332.31 L 507.65 325.93 L 510.84 321.47 L 511.48 316.68 L 512.43 314.13 L 513.71 312.86 L 515.30 312.22 L 519.77 311.90 L 535.07 311.90 L 535.39 312.22 L 556.43 311.90 L 558.34 312.86 L 559.62 314.13 L 562.81 318.60 L 563.44 324.02 L 566.95 329.44 L 567.91 335.49 L 571.09 339.96 L 572.05 346.65 L 575.56 351.75 L 575.88 356.54 L 575.24 358.45 L 572.37 362.59 L 572.37 363.87 L 573.33 365.14 L 574.92 365.78 L 598.51 365.78 L 598.83 365.46 L 612.86 365.78 L 614.45 365.14 L 615.41 363.87 L 615.41 362.59 L 614.77 361.32 L 612.86 359.09 L 610.31 357.49 L 608.40 353.67 L 605.84 350.80 L 603.61 345.38 L 602.02 343.78 L 601.06 341.87 L 600.11 336.77 L 596.92 331.99 L 595.64 325.93 L 592.77 320.83 L 591.82 316.37 L 588.63 310.95 L 587.35 305.53 L 584.17 299.79 L 583.21 295.01 L 582.25 293.09 L 580.02 290.54 L 579.06 284.17 L 576.20 280.34 L 575.56 278.75 L 574.92 273.96 L 571.09 268.23 L 570.46 262.81 L 567.91 259.62 L 567.27 258.34 L 566.63 253.24 L 562.81 247.50 L 561.85 241.76 L 558.66 236.98 L 557.70 233.48 L 557.70 231.56 L 556.43 228.69 L 552.92 224.87 L 550.37 223.91 L 543.04 224.23 L 541.45 224.87 L 538.89 224.87 L 536.66 223.91 L 532.84 223.91 L 531.24 224.55 L 528.06 224.55 L 525.19 223.91 L 519.45 223.91 Z M 534.43 256.11 L 536.03 256.11 L 536.34 256.43 L 536.66 256.43 L 537.30 257.07 L 537.30 257.39 L 537.94 258.02 L 537.94 258.34 L 538.26 258.66 L 538.26 258.98 L 538.89 259.62 L 538.89 259.94 L 539.21 260.26 L 539.21 260.57 L 539.85 261.21 L 539.85 261.53 L 540.17 261.85 L 540.17 262.17 L 540.49 262.49 L 540.49 262.81 L 540.81 263.12 L 540.81 263.44 L 541.13 263.76 L 541.13 264.72 L 541.45 265.04 L 541.45 266.31 L 541.76 266.63 L 541.76 268.23 L 542.08 268.54 L 542.08 269.18 L 542.40 269.50 L 542.40 269.82 L 542.72 270.14 L 542.72 270.46 L 543.04 270.78 L 543.04 271.09 L 543.68 271.73 L 543.68 272.05 L 544.95 273.33 L 544.95 273.65 L 545.27 273.96 L 545.27 274.28 L 545.59 274.60 L 545.59 274.92 L 545.91 275.24 L 545.91 276.83 L 546.23 277.15 L 546.23 279.06 L 546.55 279.38 L 546.55 280.34 L 546.87 280.66 L 546.87 280.98 L 547.18 281.30 L 547.18 281.62 L 547.50 281.93 L 547.50 282.25 L 548.14 282.89 L 548.14 283.21 L 549.10 284.17 L 549.10 284.48 L 549.42 284.80 L 549.42 285.12 L 549.73 285.44 L 549.73 286.08 L 550.05 286.40 L 550.05 287.35 L 550.37 287.67 L 550.37 289.27 L 550.69 289.59 L 550.69 291.18 L 551.01 291.50 L 551.01 291.82 L 551.33 292.14 L 551.33 292.45 L 551.65 292.77 L 551.65 293.09 L 551.97 293.09 L 553.24 294.37 L 553.24 294.69 L 553.56 295.01 L 553.56 295.32 L 553.88 295.64 L 553.88 297.56 L 553.56 297.87 L 553.56 298.19 L 552.92 298.83 L 552.60 298.83 L 552.28 299.15 L 547.82 299.15 L 547.50 298.83 L 540.17 298.83 L 539.85 299.15 L 532.84 299.15 L 532.52 298.83 L 529.33 298.83 L 529.01 299.15 L 522.00 299.15 L 521.68 298.83 L 521.04 298.83 L 519.77 297.56 L 519.77 297.24 L 519.45 296.92 L 519.45 295.01 L 519.77 294.69 L 519.77 293.73 L 520.08 293.41 L 520.08 292.77 L 520.40 292.45 L 520.40 291.82 L 520.72 291.50 L 520.72 291.18 L 521.04 290.86 L 521.04 290.54 L 521.36 290.22 L 521.36 289.90 L 522.00 289.27 L 522.00 288.95 L 522.64 288.31 L 522.64 287.99 L 522.95 287.67 L 522.95 287.35 L 523.27 287.04 L 523.27 286.72 L 523.59 286.40 L 523.59 285.44 L 523.91 285.12 L 523.91 283.85 L 524.23 283.53 L 524.23 282.57 L 524.55 282.25 L 524.55 281.93 L 524.87 281.62 L 524.87 280.98 L 525.19 280.66 L 525.19 280.34 L 525.50 280.02 L 525.50 279.70 L 526.14 279.06 L 526.14 278.75 L 526.78 278.11 L 526.78 277.79 L 527.10 277.47 L 527.10 277.15 L 527.42 276.83 L 527.42 276.20 L 527.74 275.88 L 527.74 274.92 L 528.06 274.60 L 528.06 273.01 L 528.37 272.69 L 528.37 271.41 L 528.69 271.09 L 528.69 270.46 L 529.01 270.14 L 529.01 269.82 L 529.65 269.18 L 529.65 268.86 L 530.92 267.59 L 530.92 267.27 L 531.24 266.95 L 531.24 266.63 L 531.56 266.31 L 531.56 265.99 L 531.88 265.67 L 531.88 265.36 L 532.20 265.04 L 532.20 263.44 L 532.52 263.12 L 532.52 260.57 L 532.84 260.26 L 532.84 258.66 L 533.16 258.34 L 533.16 257.70 L 533.48 257.39 L 533.48 257.07 Z M 273.96 224.55 L 273.01 225.82 L 273.01 227.10 L 274.28 230.92 L 274.60 237.30 L 273.33 242.40 L 270.14 248.14 L 269.18 253.88 L 267.27 256.11 L 265.67 258.98 L 265.04 263.76 L 261.85 268.86 L 260.57 274.28 L 257.70 279.38 L 256.11 285.44 L 253.24 290.22 L 252.28 294.69 L 249.42 299.15 L 247.82 306.16 L 244.95 310.95 L 244.00 316.05 L 240.49 321.79 L 239.53 326.89 L 236.66 331.35 L 235.71 336.45 L 231.88 343.46 L 230.92 347.61 L 228.06 351.43 L 226.46 355.58 L 224.23 357.81 L 222.95 358.45 L 220.08 362.59 L 220.40 364.51 L 222.64 365.78 L 224.23 365.46 L 229.65 365.78 L 254.52 365.46 L 255.15 365.78 L 257.39 364.51 L 257.70 362.59 L 254.52 356.22 L 254.52 353.67 L 256.11 348.88 L 256.75 343.78 L 257.70 341.55 L 260.26 338.04 L 261.21 331.03 L 264.08 326.89 L 265.04 321.15 L 269.82 312.54 L 271.09 311.90 L 285.12 311.90 L 285.44 312.22 L 313.82 311.90 L 316.37 314.45 L 317.32 318.92 L 319.87 323.06 L 321.15 328.48 L 323.70 332.62 L 325.61 339.96 L 328.16 344.42 L 329.76 351.43 L 331.99 355.26 L 331.67 357.17 L 329.76 359.40 L 328.48 361.96 L 328.48 363.55 L 329.44 364.82 L 331.03 365.46 L 358.45 365.46 L 358.77 365.78 L 363.23 365.14 L 368.01 365.78 L 369.61 365.14 L 370.56 363.87 L 370.56 362.59 L 369.61 360.68 L 363.55 354.62 L 361.64 349.84 L 358.77 346.33 L 356.85 340.28 L 354.62 337.09 L 353.67 331.35 L 350.48 326.57 L 349.52 321.47 L 346.01 315.73 L 345.06 309.99 L 341.87 304.89 L 340.60 299.15 L 337.41 294.05 L 336.77 289.90 L 333.90 285.12 L 332.62 279.06 L 329.44 273.96 L 328.16 268.54 L 324.97 263.12 L 323.70 257.39 L 320.83 252.92 L 319.55 247.18 L 316.68 242.08 L 315.41 236.03 L 312.22 231.56 L 311.58 227.74 L 310.63 225.82 L 307.12 224.23 L 288.95 224.55 L 284.80 223.91 L 283.53 224.23 L 275.56 223.91 Z M 293.41 255.47 L 295.01 257.07 L 295.01 257.70 L 295.32 258.02 L 295.32 259.62 L 295.64 259.94 L 295.64 263.44 L 295.96 263.76 L 295.96 264.40 L 296.28 264.72 L 296.28 265.04 L 296.60 265.36 L 296.60 265.67 L 297.24 266.31 L 297.24 266.63 L 297.87 267.27 L 297.87 267.59 L 298.19 267.91 L 298.19 268.23 L 298.51 268.54 L 298.51 268.86 L 298.83 269.18 L 298.83 269.82 L 299.15 270.14 L 299.15 271.09 L 299.47 271.41 L 299.47 272.37 L 299.79 272.69 L 299.79 273.65 L 300.11 273.96 L 300.11 274.60 L 300.43 274.92 L 300.43 275.24 L 300.74 275.56 L 300.74 275.88 L 301.06 276.20 L 301.06 276.51 L 301.70 277.15 L 301.70 277.47 L 302.02 277.79 L 302.02 278.11 L 302.66 278.75 L 302.66 279.38 L 302.98 279.70 L 302.98 280.34 L 303.29 280.66 L 303.29 281.62 L 303.61 281.93 L 303.61 283.21 L 303.93 283.53 L 303.93 284.48 L 304.25 284.80 L 304.25 285.76 L 304.57 286.08 L 304.57 286.40 L 304.89 286.72 L 304.89 287.04 L 305.53 287.67 L 305.53 287.99 L 306.48 288.95 L 306.48 289.27 L 307.12 289.90 L 307.12 290.54 L 307.44 290.86 L 307.44 291.50 L 307.76 291.82 L 307.76 292.77 L 308.08 293.09 L 308.08 293.73 L 308.40 294.05 L 308.40 295.01 L 308.71 295.32 L 308.71 297.56 L 307.44 298.83 L 307.12 298.83 L 306.80 299.15 L 305.84 299.15 L 305.53 299.47 L 303.61 299.47 L 303.29 299.15 L 301.70 299.15 L 301.38 298.83 L 296.92 298.83 L 296.60 299.15 L 292.77 299.15 L 292.45 298.83 L 284.80 298.83 L 284.48 299.15 L 276.83 299.15 L 276.51 298.83 L 275.88 298.83 L 274.92 297.87 L 274.92 297.56 L 274.60 297.24 L 274.60 295.96 L 274.92 295.64 L 274.92 295.32 L 275.24 295.01 L 275.24 294.69 L 276.51 293.41 L 276.51 293.09 L 276.83 292.77 L 276.83 292.45 L 277.15 292.14 L 277.15 291.50 L 277.47 291.18 L 277.47 289.27 L 277.79 288.95 L 277.79 287.67 L 278.11 287.35 L 278.11 286.72 L 278.43 286.40 L 278.43 285.76 L 278.75 285.44 L 278.75 285.12 L 279.70 284.17 L 279.70 283.85 L 280.66 282.89 L 280.66 282.57 L 280.98 282.25 L 280.98 281.93 L 281.30 281.62 L 281.30 281.30 L 281.62 280.98 L 281.62 280.02 L 281.93 279.70 L 281.93 277.79 L 282.25 277.47 L 282.25 275.88 L 282.57 275.56 L 282.57 274.92 L 282.89 274.60 L 282.89 274.28 L 283.85 273.33 L 283.85 273.01 L 284.80 272.05 L 284.80 271.73 L 285.12 271.41 L 285.12 271.09 L 285.44 270.78 L 285.44 270.46 L 285.76 270.14 L 285.76 269.18 L 286.08 268.86 L 286.08 267.91 L 286.40 267.59 L 286.40 266.31 L 286.72 265.99 L 286.72 265.36 L 287.04 265.04 L 287.04 264.40 L 287.35 264.08 L 287.35 263.76 L 287.99 263.12 L 287.99 262.81 L 288.63 262.17 L 288.63 261.85 L 288.95 261.53 L 288.95 261.21 L 289.27 260.89 L 289.27 260.26 L 289.59 259.94 L 289.59 259.30 L 289.90 258.98 L 289.90 258.34 L 290.22 258.02 L 290.22 257.39 L 290.86 256.75 L 290.86 256.43 L 291.50 255.79 L 291.82 255.79 L 292.14 255.47 Z M 475.45 224.55 L 473.22 223.59 L 466.84 223.91 L 466.52 224.23 L 372.16 224.23 L 371.84 224.55 L 366.42 223.91 L 364.19 225.19 L 363.55 226.78 L 363.55 229.65 L 362.91 233.48 L 361.96 235.71 L 360.04 238.26 L 359.09 244.63 L 357.17 248.46 L 357.17 249.73 L 358.13 251.01 L 359.72 251.65 L 362.27 250.69 L 365.46 248.46 L 367.38 248.14 L 370.88 248.14 L 378.53 246.87 L 389.37 246.87 L 389.69 246.55 L 394.47 246.55 L 394.79 246.23 L 398.30 246.55 L 400.21 247.50 L 402.13 250.05 L 402.13 336.45 L 402.44 337.41 L 401.81 341.55 L 401.49 354.30 L 400.53 356.54 L 398.62 358.45 L 397.02 361.96 L 397.02 363.55 L 397.98 364.82 L 399.57 365.46 L 433.69 365.46 L 435.60 366.10 L 437.51 365.78 L 438.79 364.82 L 439.11 362.91 L 438.15 361.00 L 435.28 357.81 L 432.09 350.80 L 430.82 343.78 L 430.82 338.68 L 430.50 338.36 L 430.50 336.13 L 430.82 335.81 L 430.82 249.73 L 431.46 248.14 L 433.05 246.55 L 435.28 246.23 L 437.83 246.87 L 448.99 246.87 L 449.31 247.18 L 454.41 247.18 L 456.96 247.82 L 460.79 247.82 L 463.66 248.78 L 464.93 250.69 L 467.16 251.65 L 469.71 250.69 L 470.67 248.46 L 473.22 238.58 L 473.86 233.48 L 476.09 227.74 L 476.09 225.82 Z" fill="#F5DFA0" fill-rule="evenodd"/>
+          </g>
+        </svg>
+        <!-- Trailer undercarriage -->
+        <rect x="10" y="94" width="240" height="6" rx="2" fill="#0C0E13" stroke="#2A2D36" stroke-width="0.8"/>
+        <!-- Rear lights -->
+        <rect x="2" y="76" width="4" height="12" rx="1" fill="#E53E3E" opacity="0.7"/>
+        <rect x="2" y="30" width="4" height="8" rx="1" fill="#D4940A" opacity="0.4"/>
+        <!-- Trailer wheels -->
+        <!-- Rear axle set 1 -->
+        <circle cx="50" cy="104" r="14" fill="#0C0E13" stroke="#2A2D36" stroke-width="2"/>
+        <circle cx="50" cy="104" r="8" fill="#13161D" stroke="#D4940A" stroke-width="1" opacity="0.5"/>
+        <circle cx="50" cy="104" r="3" fill="#D4940A" opacity="0.3"/>
+        <!-- Rear axle set 2 -->
+        <circle cx="90" cy="104" r="14" fill="#0C0E13" stroke="#2A2D36" stroke-width="2"/>
+        <circle cx="90" cy="104" r="8" fill="#13161D" stroke="#D4940A" stroke-width="1" opacity="0.5"/>
+        <circle cx="90" cy="104" r="3" fill="#D4940A" opacity="0.3"/>
+        <!-- Wheel spokes animation -->
+        <g style="animation: spinCW 0.5s linear infinite; transform-origin: 50px 104px;">
+          <line x1="50" y1="96" x2="50" y2="112" stroke="#D4940A" stroke-width="0.5" opacity="0.3"/>
+          <line x1="42" y1="104" x2="58" y2="104" stroke="#D4940A" stroke-width="0.5" opacity="0.3"/>
+        </g>
+        <g style="animation: spinCW 0.5s linear infinite; transform-origin: 90px 104px;">
+          <line x1="90" y1="96" x2="90" y2="112" stroke="#D4940A" stroke-width="0.5" opacity="0.3"/>
+          <line x1="82" y1="104" x2="98" y2="104" stroke="#D4940A" stroke-width="0.5" opacity="0.3"/>
+        </g>
+
+        <!-- === COUPLING === -->
+        <rect x="255" y="86" width="20" height="8" rx="2" fill="#1A1E27" stroke="#2A2D36" stroke-width="1"/>
+
+        <!-- === CAB (TRACTOR) === -->
+        <!-- Cab body -->
+        <rect x="272" y="28" width="100" height="66" rx="5" fill="#13161D" stroke="#0A8F7F" stroke-width="1.5"/>
+        <!-- Hood (engine area, extends forward) -->
+        <rect x="365" y="48" width="40" height="46" rx="4" fill="#13161D" stroke="#0A8F7F" stroke-width="1.5"/>
+        <!-- Hood detail lines -->
+        <line x1="370" y1="56" x2="400" y2="56" stroke="#0A8F7F" stroke-width="0.5" opacity="0.3"/>
+        <line x1="370" y1="64" x2="400" y2="64" stroke="#0A8F7F" stroke-width="0.5" opacity="0.3"/>
+        <!-- Hood top slope -->
+        <path d="M 365 48 L 395 38 L 405 38 L 405 48" fill="#13161D" stroke="#0A8F7F" stroke-width="1.2"/>
+        <!-- Windshield -->
+        <rect x="354" y="32" width="18" height="34" rx="3" fill="#0A8F7F" opacity="0.12" stroke="#A0E5D9" stroke-width="1"/>
+        <!-- Windshield glare -->
+        <line x1="358" y1="34" x2="362" y2="62" stroke="#A0E5D9" stroke-width="1" opacity="0.2"/>
+        <!-- Side window -->
+        <rect x="310" y="34" width="38" height="24" rx="3" fill="#0A8F7F" opacity="0.08" stroke="#0A8F7F" stroke-width="0.8"/>
+        <!-- Cab roof details -->
+        <rect x="280" y="20" width="80" height="10" rx="4" fill="#13161D" stroke="#0A8F7F" stroke-width="1"/>
+        <!-- Roof lights -->
+        <circle cx="296" cy="18" r="3" fill="#D4940A" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="310" cy="18" r="3" fill="#D4940A" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1s" repeatCount="indefinite" begin="0.15s"/>
+        </circle>
+        <circle cx="324" cy="18" r="3" fill="#D4940A" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1s" repeatCount="indefinite" begin="0.3s"/>
+        </circle>
+        <circle cx="338" cy="18" r="3" fill="#D4940A" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1s" repeatCount="indefinite" begin="0.45s"/>
+        </circle>
+        <circle cx="352" cy="18" r="3" fill="#D4940A" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1s" repeatCount="indefinite" begin="0.6s"/>
+        </circle>
+        <!-- Exhaust stack -->
+        <rect x="278" y="4" width="6" height="20" rx="2" fill="#1A1E27" stroke="#2A2D36" stroke-width="1"/>
+        <!-- Exhaust puff -->
+        <circle cx="281" cy="0" r="4" fill="#2A2D36" opacity="0.3">
+          <animate attributeName="cy" values="0;-12" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="4;8" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.3;0" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="281" cy="0" r="3" fill="#2A2D36" opacity="0.2">
+          <animate attributeName="cy" values="0;-16" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+          <animate attributeName="r" values="3;7" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+          <animate attributeName="opacity" values="0.2;0" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+        </circle>
+        <!-- Headlights -->
+        <rect x="402" y="50" width="6" height="10" rx="2" fill="#F5DFA0" opacity="0.8">
+          <animate attributeName="opacity" values="0.8;0.5;0.8" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="402" y="66" width="6" height="6" rx="2" fill="#D4940A" opacity="0.5"/>
+        <!-- Headlight beam -->
+        <path d="M 408 55 L 440 40 L 440 80 L 408 65 Z" fill="url(#beam)" opacity="0.06"/>
+        <!-- Bumper -->
+        <rect x="400" y="84" width="12" height="10" rx="2" fill="#1A1E27" stroke="#2A2D36" stroke-width="1"/>
+        <!-- Fuel tank -->
+        <rect x="300" y="72" width="30" height="20" rx="4" fill="#0C0E13" stroke="#2A2D36" stroke-width="1"/>
+        <!-- Steps -->
+        <rect x="348" y="80" width="14" height="4" rx="1" fill="#1A1E27" stroke="#0A8F7F" stroke-width="0.6" opacity="0.5"/>
+        <rect x="348" y="88" width="14" height="4" rx="1" fill="#1A1E27" stroke="#0A8F7F" stroke-width="0.6" opacity="0.4"/>
+        <!-- Drive wheels -->
+        <circle cx="310" cy="104" r="14" fill="#0C0E13" stroke="#2A2D36" stroke-width="2"/>
+        <circle cx="310" cy="104" r="8" fill="#13161D" stroke="#0A8F7F" stroke-width="1" opacity="0.5"/>
+        <circle cx="310" cy="104" r="3" fill="#0A8F7F" opacity="0.3"/>
+        <!-- Steer wheels -->
+        <circle cx="388" cy="104" r="14" fill="#0C0E13" stroke="#2A2D36" stroke-width="2"/>
+        <circle cx="388" cy="104" r="8" fill="#13161D" stroke="#0A8F7F" stroke-width="1" opacity="0.5"/>
+        <circle cx="388" cy="104" r="3" fill="#0A8F7F" opacity="0.3"/>
+        <!-- Wheel spin -->
+        <g style="animation: spinCW 0.5s linear infinite; transform-origin: 310px 104px;">
+          <line x1="310" y1="96" x2="310" y2="112" stroke="#0A8F7F" stroke-width="0.5" opacity="0.3"/>
+          <line x1="302" y1="104" x2="318" y2="104" stroke="#0A8F7F" stroke-width="0.5" opacity="0.3"/>
+        </g>
+        <g style="animation: spinCW 0.5s linear infinite; transform-origin: 388px 104px;">
+          <line x1="388" y1="96" x2="388" y2="112" stroke="#0A8F7F" stroke-width="0.5" opacity="0.3"/>
+          <line x1="380" y1="104" x2="396" y2="104" stroke="#0A8F7F" stroke-width="0.5" opacity="0.3"/>
+        </g>
+        <!-- Side mirrors -->
+        <rect x="352" y="30" width="4" height="8" rx="1" fill="#1A1E27" stroke="#0A8F7F" stroke-width="0.6"/>
+        <line x1="354" y1="30" x2="354" y2="24" stroke="#0A8F7F" stroke-width="0.6"/>
+
+        <!-- Gradient defs -->
+        <defs>
+          <linearGradient id="beam" x1="408" y1="55" x2="440" y2="55">
+            <stop offset="0%" stop-color="#F5DFA0" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#F5DFA0" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <style>
+          @keyframes spinCW { to { transform: rotate(360deg); } }
+        </style>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <span>Nathan A. Gaffney, Partner</span>
+    <span>Fried Goldberg, LLC</span>
+  </div>
+</div>
+</body>
+</html>
