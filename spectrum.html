@@ -153,7 +153,16 @@
     color: var(--t3);
   }
   .end-label.left { left: 0; color: var(--amber); }
-  .end-label.right { right: 0; color: var(--teal); }
+  .end-label.right { right: 0; text-align: right; color: var(--teal); }
+  .end-label .desc {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--t3);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
 
   /* The bar track */
   .bar-track {
@@ -242,11 +251,14 @@
     background: inherit;
     opacity: 0.6;
   }
-  .tick:nth-child(1) { left: 0%; background: var(--amber); animation: tickIn 0.5s 2.0s ease-out forwards; }
-  .tick:nth-child(2) { left: 25%; background: #C9A030; animation: tickIn 0.5s 2.2s ease-out forwards; }
-  .tick:nth-child(3) { left: 50%; background: #8DAA5A; animation: tickIn 0.5s 2.4s ease-out forwards; }
-  .tick:nth-child(4) { left: 75%; background: #3DAF8E; animation: tickIn 0.5s 2.6s ease-out forwards; }
-  .tick:nth-child(5) { left: 100%; background: var(--teal); animation: tickIn 0.5s 2.8s ease-out forwards; }
+  .tick:nth-child(1) { left: 2%; background: var(--amber); animation: tickIn 0.5s 2.0s ease-out forwards; }
+  .tick:nth-child(2) { left: 16%; background: #D4A030; animation: tickIn 0.5s 2.1s ease-out forwards; }
+  .tick:nth-child(3) { left: 30%; background: #C0A030; animation: tickIn 0.5s 2.2s ease-out forwards; }
+  .tick:nth-child(4) { left: 44%; background: #A0A848; animation: tickIn 0.5s 2.3s ease-out forwards; }
+  .tick:nth-child(5) { left: 58%; background: #80AA60; animation: tickIn 0.5s 2.4s ease-out forwards; }
+  .tick:nth-child(6) { left: 72%; background: #50AE80; animation: tickIn 0.5s 2.5s ease-out forwards; }
+  .tick:nth-child(7) { left: 86%; background: #30B090; animation: tickIn 0.5s 2.6s ease-out forwards; }
+  .tick:nth-child(8) { left: 98%; background: var(--teal); animation: tickIn 0.5s 2.7s ease-out forwards; }
   @keyframes tickIn {
     from { opacity: 0; transform: scaleY(0); }
     to { opacity: 0.4; transform: scaleY(1); }
@@ -268,7 +280,7 @@
     opacity: 0;
   }
   .tool-label .name {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--t1);
     white-space: nowrap;
@@ -288,30 +300,46 @@
     margin-bottom: 4px;
   }
 
-  .tool-label:nth-child(1) { left: 5%; }
+  /* 8 tools evenly spaced: 2%, 16%, 30%, 44%, 58%, 72%, 86%, 98% */
+  .tool-label:nth-child(1) { left: 2%; }
   .tool-label:nth-child(1) .connector { background: var(--amber); }
   .tool-label:nth-child(1) .name { color: var(--amber-light); }
   .tool-label:nth-child(1) { animation: labelIn 0.6s 3.0s ease-out forwards; }
 
-  .tool-label:nth-child(2) { left: 28%; }
-  .tool-label:nth-child(2) .connector { background: #C9A030; }
-  .tool-label:nth-child(2) .name { color: #E8D080; }
-  .tool-label:nth-child(2) { animation: labelIn 0.6s 3.3s ease-out forwards; }
+  .tool-label:nth-child(2) { left: 16%; }
+  .tool-label:nth-child(2) .connector { background: #D4A030; }
+  .tool-label:nth-child(2) .name { color: #F0C860; }
+  .tool-label:nth-child(2) { animation: labelIn 0.6s 3.15s ease-out forwards; }
 
-  .tool-label:nth-child(3) { left: 52%; }
-  .tool-label:nth-child(3) .connector { background: #8DAA5A; }
-  .tool-label:nth-child(3) .name { color: #B8D88A; }
-  .tool-label:nth-child(3) { animation: labelIn 0.6s 3.6s ease-out forwards; }
+  .tool-label:nth-child(3) { left: 30%; }
+  .tool-label:nth-child(3) .connector { background: #C0A030; }
+  .tool-label:nth-child(3) .name { color: #E0C860; }
+  .tool-label:nth-child(3) { animation: labelIn 0.6s 3.3s ease-out forwards; }
 
-  .tool-label:nth-child(4) { left: 78%; }
-  .tool-label:nth-child(4) .connector { background: #3DAF8E; }
-  .tool-label:nth-child(4) .name { color: var(--teal-light); }
-  .tool-label:nth-child(4) { animation: labelIn 0.6s 3.9s ease-out forwards; }
+  .tool-label:nth-child(4) { left: 44%; }
+  .tool-label:nth-child(4) .connector { background: #A0A848; }
+  .tool-label:nth-child(4) .name { color: #C8D070; }
+  .tool-label:nth-child(4) { animation: labelIn 0.6s 3.45s ease-out forwards; }
 
-  .tool-label:nth-child(5) { left: 96%; }
-  .tool-label:nth-child(5) .connector { background: var(--teal); }
-  .tool-label:nth-child(5) .name { color: var(--teal-light); }
-  .tool-label:nth-child(5) { animation: labelIn 0.6s 4.2s ease-out forwards; }
+  .tool-label:nth-child(5) { left: 58%; }
+  .tool-label:nth-child(5) .connector { background: #80AA60; }
+  .tool-label:nth-child(5) .name { color: #B0D088; }
+  .tool-label:nth-child(5) { animation: labelIn 0.6s 3.6s ease-out forwards; }
+
+  .tool-label:nth-child(6) { left: 72%; }
+  .tool-label:nth-child(6) .connector { background: #50AE80; }
+  .tool-label:nth-child(6) .name { color: #90D8B0; }
+  .tool-label:nth-child(6) { animation: labelIn 0.6s 3.75s ease-out forwards; }
+
+  .tool-label:nth-child(7) { left: 86%; }
+  .tool-label:nth-child(7) .connector { background: #30B090; }
+  .tool-label:nth-child(7) .name { color: var(--teal-light); }
+  .tool-label:nth-child(7) { animation: labelIn 0.6s 3.9s ease-out forwards; }
+
+  .tool-label:nth-child(8) { left: 98%; }
+  .tool-label:nth-child(8) .connector { background: var(--teal); }
+  .tool-label:nth-child(8) .name { color: var(--teal-light); }
+  .tool-label:nth-child(8) { animation: labelIn 0.6s 4.05s ease-out forwards; }
 
   @keyframes labelIn {
     from { opacity: 0; transform: translateX(-50%) translateY(8px); }
@@ -370,6 +398,34 @@
   @keyframes ringPulse {
     0% { transform: scale(1); opacity: 0.6; }
     100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  /* Bottom end labels (mirror of top) */
+  .bottom-labels {
+    position: absolute;
+    bottom: -80px;
+    left: 0;
+    right: 0;
+  }
+  .bottom-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 0.8s 2.5s ease both;
+  }
+  .bottom-label.left { left: 0; color: var(--amber); }
+  .bottom-label.right { right: 0; text-align: right; color: var(--teal); }
+  .bottom-label .desc {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--t3);
+    margin-top: 2px;
+    line-height: 1.4;
   }
 
   /* SVG spectrum visualization */
@@ -444,8 +500,8 @@
   <!-- Spectrum bar area -->
   <div class="spectrum-area">
     <!-- End labels -->
-    <div class="end-label left">HIGH RANDOMNESS</div>
-    <div class="end-label right">ZERO RANDOMNESS</div>
+    <div class="end-label left">HIGH RANDOMNESS<span class="desc">Creative, unpredictable<br>Requires heavy verification</span></div>
+    <div class="end-label right">LESS RANDOMNESS<span class="desc">Deterministic, precise<br>Code-controlled output</span></div>
 
     <!-- Bar track -->
     <div class="bar-track">
@@ -463,13 +519,9 @@
       <div class="tick"></div>
       <div class="tick"></div>
       <div class="tick"></div>
-    </div>
-
-    <!-- Progress marker at 14% -->
-    <div class="marker" style="left: 14%;">
-      <div class="marker-label">YOU ARE HERE</div>
-      <div class="marker-ring"></div>
-      <div class="marker-dot"></div>
+      <div class="tick"></div>
+      <div class="tick"></div>
+      <div class="tick"></div>
     </div>
 
     <!-- Tool labels along the spectrum -->
@@ -481,24 +533,45 @@
       </div>
       <div class="tool-label">
         <div class="connector"></div>
-        <div class="name">DALL-E</div>
-        <div class="desc">Image Gen</div>
+        <div class="name">ChatGPT</div>
+        <div class="desc">Text + Image</div>
       </div>
       <div class="tool-label">
         <div class="connector"></div>
-        <div class="name">Google AI Studio</div>
-        <div class="desc">Text + Vision</div>
+        <div class="name">Canva</div>
+        <div class="desc">AI Design</div>
       </div>
       <div class="tool-label">
         <div class="connector"></div>
-        <div class="name">Figma AI</div>
-        <div class="desc">Design</div>
+        <div class="name">Gamma</div>
+        <div class="desc">Presentations</div>
+      </div>
+      <div class="tool-label">
+        <div class="connector"></div>
+        <div class="name">AI Studio</div>
+        <div class="desc">Two-Stage</div>
+      </div>
+      <div class="tool-label">
+        <div class="connector"></div>
+        <div class="name">Copilot</div>
+        <div class="desc">Code Assist</div>
+      </div>
+      <div class="tool-label">
+        <div class="connector"></div>
+        <div class="name">Figma</div>
+        <div class="desc">Design System</div>
       </div>
       <div class="tool-label">
         <div class="connector"></div>
         <div class="name">Claude Code</div>
         <div class="desc">Deterministic</div>
       </div>
+    </div>
+
+    <!-- Bottom end labels -->
+    <div class="bottom-labels">
+      <div class="bottom-label left">HIGH RANDOMNESS<span class="desc">Creative, unpredictable<br>Requires heavy verification</span></div>
+      <div class="bottom-label right">LESS RANDOMNESS<span class="desc">Deterministic, precise<br>Code-controlled output</span></div>
     </div>
 
     <!-- SVG waveform visualization -->
