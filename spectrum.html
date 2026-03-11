@@ -16,7 +16,7 @@
     --border: #2A2D36;
     --t1: #E8E6E1;
     --t2: #9A978F;
-    --t3: #5C5A54;
+    --t3: #6B6960;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -36,21 +36,56 @@
     overflow: hidden;
   }
 
-  /* Ambient glows */
-  .slide::before {
-    content: '';
+  /* ── Background effects ── */
+
+  /* Large ambient glow orbs */
+  .glow-orb {
     position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 500px 350px at 25% 50%, rgba(212,148,10,0.07), transparent),
-      radial-gradient(ellipse 500px 350px at 75% 50%, rgba(10,143,127,0.06), transparent);
+    border-radius: 50%;
     pointer-events: none;
     z-index: 0;
-    animation: glowShift 8s ease-in-out infinite alternate;
+    filter: blur(80px);
   }
-  @keyframes glowShift {
-    0% { opacity: 0.8; }
-    100% { opacity: 1; }
+  .glow-orb.amber {
+    width: 600px; height: 400px;
+    left: -100px; top: 100px;
+    background: radial-gradient(ellipse, rgba(212,148,10,0.08), transparent 70%);
+    animation: orbFloat 10s ease-in-out infinite alternate;
+  }
+  .glow-orb.teal {
+    width: 500px; height: 400px;
+    right: -80px; top: 80px;
+    background: radial-gradient(ellipse, rgba(10,143,127,0.07), transparent 70%);
+    animation: orbFloat 12s ease-in-out infinite alternate-reverse;
+  }
+  .glow-orb.center {
+    width: 800px; height: 300px;
+    left: 50%; top: 45%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(160,140,60,0.04), transparent 70%);
+    animation: orbPulse 6s ease-in-out infinite;
+  }
+  @keyframes orbFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, -20px); }
+  }
+  @keyframes orbPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* Subtle grid lines */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(42,45,54,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42,45,54,0.15) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 80%);
   }
 
   /* Floating particles */
@@ -68,252 +103,9 @@
   }
   @keyframes float {
     0% { transform: translateY(0) translateX(0); opacity: 0; }
-    10% { opacity: 0.5; }
-    90% { opacity: 0.5; }
-    100% { transform: translateY(-280px) translateX(30px); opacity: 0; }
-  }
-
-  /* ── Header ── */
-  .header {
-    position: absolute;
-    top: 36px;
-    left: 64px;
-    z-index: 3;
-    opacity: 0;
-    animation: fadeIn 1s 0.3s ease both;
-  }
-  .header .eyebrow {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 8px;
-  }
-  .header h1 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 52px;
-    color: var(--t1);
-    line-height: 1.1;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── Spectrum zone ── */
-  .spectrum-zone {
-    position: absolute;
-    left: 64px;
-    right: 64px;
-    top: 190px;
-    bottom: 80px;
-    z-index: 2;
-  }
-
-  /* Descriptor labels flanking the bar */
-  .desc-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    opacity: 0;
-    animation: fadeIn 0.8s 0.8s ease both;
-  }
-  .desc-label {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    line-height: 1.5;
-  }
-  .desc-label.left { color: var(--amber); }
-  .desc-label.right { text-align: right; color: var(--teal); }
-  .desc-label .sub {
-    display: block;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    color: var(--t3);
-  }
-
-  /* The bar */
-  .bar-wrap {
-    position: relative;
-    height: 24px;
-    border-radius: 12px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    overflow: visible;
-  }
-  .bar-fill {
-    position: absolute;
-    inset: -1px;
-    border-radius: 12px;
-    background: linear-gradient(to right, var(--amber), #B89A3E, #6BA86B, var(--teal));
-    opacity: 0;
-    animation: barReveal 1.8s 1.2s ease-out forwards;
-  }
-  @keyframes barReveal {
-    0% { clip-path: inset(0 100% 0 0); opacity: 1; }
-    100% { clip-path: inset(0 0% 0 0); opacity: 1; }
-  }
-
-  /* Glow under bar */
-  .bar-glow {
-    position: absolute;
-    top: 4px;
-    left: 0;
-    right: 0;
-    height: 24px;
-    background: linear-gradient(to right, rgba(212,148,10,0.2), rgba(10,143,127,0.2));
-    filter: blur(16px);
-    border-radius: 12px;
-    opacity: 0;
-    animation: barReveal 2s 1.5s ease-out forwards;
-  }
-
-  /* Scanning beam */
-  .scan-beam {
-    position: absolute;
-    top: -4px;
-    width: 80px;
-    height: 32px;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.2), transparent);
-    border-radius: 50%;
-    opacity: 0;
-    animation: scanBeam 5s 3.5s ease-in-out infinite;
-  }
-  @keyframes scanBeam {
-    0% { left: -80px; opacity: 0; }
-    5% { opacity: 1; }
-    95% { opacity: 1; }
-    100% { left: calc(100% + 80px); opacity: 0; }
-  }
-
-  /* ── Tool markers on the bar ── */
-  .markers {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 24px;
-  }
-  .marker-dot {
-    position: absolute;
-    top: 50%;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--t1);
-    border: 2px solid var(--bg);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    z-index: 2;
-  }
-
-  /* ── Tool labels below bar ── */
-  .tool-row {
-    position: relative;
-    margin-top: 20px;
-    height: 180px;
-  }
-  .tool-item {
-    position: absolute;
-    text-align: center;
-    transform: translateX(-50%);
-    opacity: 0;
-  }
-  .tool-item .stem {
-    width: 1px;
-    height: 20px;
-    margin: 0 auto 8px;
-    opacity: 0.4;
-  }
-  .tool-item .tool-name {
-    font-size: 18px;
-    font-weight: 600;
-    white-space: nowrap;
-    letter-spacing: 0.01em;
-  }
-  .tool-item .tool-type {
-    font-size: 13px;
-    color: var(--t3);
-    margin-top: 3px;
-    white-space: nowrap;
-    letter-spacing: 0.04em;
-  }
-
-  /* Stagger: odd labels top row, even labels lower row to prevent overlap */
-  .tool-item.row-top .stem { height: 20px; }
-  .tool-item.row-bot .stem { height: 52px; }
-
-  /* Per-tool colors — gradient from amber to teal */
-  .t1 .stem { background: var(--amber); }
-  .t1 .tool-name { color: var(--amber-light); }
-
-  .t2 .stem { background: #D4A030; }
-  .t2 .tool-name { color: #F0C860; }
-
-  .t3c .stem { background: #C0A030; }
-  .t3c .tool-name { color: #E0C860; }
-
-  .t4 .stem { background: #A0A848; }
-  .t4 .tool-name { color: #C8D070; }
-
-  .t5 .stem { background: #80AA60; }
-  .t5 .tool-name { color: #B0D088; }
-
-  .t6 .stem { background: #50AE80; }
-  .t6 .tool-name { color: #90D8B0; }
-
-  .t7 .stem { background: #30B090; }
-  .t7 .tool-name { color: var(--teal-light); }
-
-  .t8 .stem { background: var(--teal); }
-  .t8 .tool-name { color: var(--teal-light); }
-
-  @keyframes dotIn {
-    from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  }
-  @keyframes labelIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-  }
-
-  /* Bottom descriptor labels (mirror) */
-  .bottom-desc {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    opacity: 0;
-    animation: fadeIn 0.8s 2.5s ease both;
-  }
-
-  /* Bottom bar */
-  .bottom-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 4;
-    padding: 10px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(10,12,16,0.9);
-    border-top: 1px solid var(--border);
-  }
-  .bottom-bar span {
-    font-size: 18px;
-    color: var(--t3);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-300px) translateX(40px); opacity: 0; }
   }
 
   /* Noise grain overlay */
@@ -322,75 +114,313 @@
     inset: 0;
     z-index: 10;
     pointer-events: none;
-    opacity: 0.03;
+    opacity: 0.035;
     mix-blend-mode: overlay;
+  }
+
+  /* ── Header ── */
+  .header {
+    position: absolute;
+    top: 40px;
+    left: 72px;
+    z-index: 3;
+    opacity: 0;
+    animation: fadeIn 1s 0.2s ease both;
+  }
+  .header .eyebrow {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 56px;
+    color: var(--t1);
+    line-height: 1.1;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Spectrum layout ── */
+  .spectrum {
+    position: absolute;
+    left: 72px;
+    right: 72px;
+    top: 170px;
+    z-index: 2;
+  }
+
+  /* Descriptor row above bar */
+  .desc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.8s 0.6s ease both;
+  }
+  .desc-block {
+    line-height: 1.4;
+  }
+  .desc-block.right { text-align: right; }
+  .desc-block .heading {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .desc-block.left .heading { color: var(--amber); }
+  .desc-block.right .heading { color: var(--teal); }
+  .desc-block .sub {
+    font-size: 15px;
+    color: var(--t3);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── The bar ── */
+  .bar-outer {
+    position: relative;
+    height: 32px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  .bar-fill {
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    background: linear-gradient(to right, var(--amber), #B89A3E, #7BAA5A, var(--teal));
+    opacity: 0;
+    animation: barReveal 2s 1s ease-out forwards;
+  }
+  @keyframes barReveal {
+    0% { clip-path: inset(0 100% 0 0); opacity: 1; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; }
+  }
+
+  /* Bar glow */
+  .bar-glow {
+    position: absolute;
+    top: 8px;
+    left: 2%;
+    right: 2%;
+    height: 32px;
+    background: linear-gradient(to right, rgba(212,148,10,0.25), rgba(10,143,127,0.25));
+    filter: blur(20px);
+    border-radius: 16px;
+    opacity: 0;
+    animation: barReveal 2.2s 1.3s ease-out forwards;
+  }
+
+  /* Scan beam */
+  .scan-beam {
+    position: absolute;
+    top: -6px;
+    width: 100px;
+    height: 44px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.15), transparent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: scan 6s 3.5s ease-in-out infinite;
+    z-index: 3;
+  }
+  @keyframes scan {
+    0% { left: -100px; opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { left: calc(100% + 100px); opacity: 0; }
+  }
+
+  /* Dots on bar */
+  .dot {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--t1);
+    border: 2.5px solid var(--bg);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 4;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+  }
+
+  /* ── Tool labels ── */
+  .labels-zone {
+    position: relative;
+    margin-top: 16px;
+    height: 200px;
+  }
+  .label-item {
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  .label-item .stem {
+    width: 1.5px;
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+  .label-item .name {
+    font-size: 22px;
+    font-weight: 600;
+    white-space: nowrap;
+    margin-top: 8px;
+    letter-spacing: 0.01em;
+  }
+  .label-item .type {
+    font-size: 14px;
+    color: var(--t3);
+    margin-top: 2px;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  /* Top row: shorter stem */
+  .label-item.top .stem { height: 24px; }
+  /* Bottom row: longer stem so names don't collide */
+  .label-item.bot .stem { height: 60px; }
+
+  /* ── Color classes ── */
+  .c1 .stem { background: var(--amber); }
+  .c1 .name { color: var(--amber-light); }
+  .c2 .stem { background: #D4A030; }
+  .c2 .name { color: #F0C860; }
+  .c3 .stem { background: #BEA030; }
+  .c3 .name { color: #E0C860; }
+  .c4 .stem { background: #A0A848; }
+  .c4 .name { color: #C8D070; }
+  .c5 .stem { background: #80AA60; }
+  .c5 .name { color: #B0D088; }
+  .c6 .stem { background: #50AE80; }
+  .c6 .name { color: #90D8B0; }
+  .c7 .stem { background: #30B090; }
+  .c7 .name { color: var(--teal-light); }
+  .c8 .stem { background: var(--teal); }
+  .c8 .name { color: var(--teal-light); }
+
+  @keyframes dotPop {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  @keyframes labelUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* ── Bottom desc row ── */
+  .bottom-desc {
+    position: absolute;
+    left: 72px;
+    right: 72px;
+    bottom: 56px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0;
+    animation: fadeIn 0.8s 2.8s ease both;
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    padding: 8px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,12,16,0.95);
+    border-top: 1px solid var(--border);
+  }
+  .bottom-bar span {
+    font-size: 16px;
+    color: var(--t3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 </style>
 </head>
 <body>
 <div class="slide">
 
+  <!-- Background effects -->
+  <div class="glow-orb amber"></div>
+  <div class="glow-orb teal"></div>
+  <div class="glow-orb center"></div>
+  <div class="grid-bg"></div>
+
   <!-- Floating particles -->
   <div class="particles">
-    <div class="particle" style="left:8%; bottom:200px; width:3px; height:3px; background:#D4940A; animation-duration:7s; animation-delay:0s;"></div>
-    <div class="particle" style="left:20%; bottom:180px; width:2px; height:2px; background:#0A8F7F; animation-duration:9s; animation-delay:1.2s;"></div>
-    <div class="particle" style="left:35%; bottom:220px; width:2.5px; height:2.5px; background:#A0E5D9; animation-duration:8s; animation-delay:2.5s;"></div>
-    <div class="particle" style="left:50%; bottom:190px; width:2px; height:2px; background:#F5DFA0; animation-duration:10s; animation-delay:0.8s;"></div>
-    <div class="particle" style="left:65%; bottom:210px; width:3px; height:3px; background:#3DC4B0; animation-duration:7.5s; animation-delay:3.2s;"></div>
-    <div class="particle" style="left:80%; bottom:200px; width:2px; height:2px; background:#D4940A; animation-duration:8.5s; animation-delay:1.8s;"></div>
-    <div class="particle" style="left:92%; bottom:230px; width:2px; height:2px; background:#0A8F7F; animation-duration:9.5s; animation-delay:4s;"></div>
-    <div class="particle" style="left:45%; bottom:170px; width:2px; height:2px; background:#A0E5D9; animation-duration:8s; animation-delay:3.5s;"></div>
+    <div class="particle" style="left:10%; bottom:180px; width:3px; height:3px; background:#D4940A; animation-duration:7s; animation-delay:0s;"></div>
+    <div class="particle" style="left:25%; bottom:200px; width:2.5px; height:2.5px; background:#0A8F7F; animation-duration:9s; animation-delay:1.2s;"></div>
+    <div class="particle" style="left:50%; bottom:160px; width:2px; height:2px; background:#F5DFA0; animation-duration:10s; animation-delay:0.8s;"></div>
+    <div class="particle" style="left:70%; bottom:190px; width:3px; height:3px; background:#3DC4B0; animation-duration:7.5s; animation-delay:3s;"></div>
+    <div class="particle" style="left:88%; bottom:210px; width:2px; height:2px; background:#D4940A; animation-duration:8.5s; animation-delay:1.8s;"></div>
+    <div class="particle" style="left:40%; bottom:220px; width:2.5px; height:2.5px; background:#A0E5D9; animation-duration:8s; animation-delay:2.5s;"></div>
   </div>
 
-  <!-- Header — compact, top left -->
+  <!-- Header -->
   <div class="header">
     <div class="eyebrow">The Spectrum</div>
     <h1>The Randomness Spectrum</h1>
   </div>
 
-  <!-- Spectrum zone -->
-  <div class="spectrum-zone">
+  <!-- Spectrum -->
+  <div class="spectrum">
+
     <!-- Descriptor labels above bar -->
-    <div class="desc-labels">
-      <div class="desc-label left">
-        HIGH RANDOMNESS
-        <span class="sub">Creative, unpredictable</span>
-        <span class="sub">Requires heavy verification</span>
+    <div class="desc-row">
+      <div class="desc-block left">
+        <div class="heading">High Randomness</div>
+        <div class="sub">Creative, unpredictable</div>
+        <div class="sub">Requires heavy verification</div>
       </div>
-      <div class="desc-label right">
-        LESS RANDOMNESS
-        <span class="sub">Deterministic, precise</span>
-        <span class="sub">Code-controlled output</span>
+      <div class="desc-block right">
+        <div class="heading">Less Randomness</div>
+        <div class="sub">Deterministic, precise</div>
+        <div class="sub">Code-controlled output</div>
       </div>
     </div>
 
     <!-- Bar -->
-    <div class="bar-wrap">
+    <div class="bar-outer">
       <div class="bar-fill"></div>
       <div class="scan-beam"></div>
-      <div class="markers" id="markers"></div>
+      <div id="dots"></div>
     </div>
     <div class="bar-glow"></div>
 
-    <!-- Tool labels — staggered two rows -->
-    <div class="tool-row" id="toolRow"></div>
+    <!-- Tool labels -->
+    <div class="labels-zone" id="labels"></div>
+  </div>
 
-    <!-- Bottom descriptors -->
-    <div class="bottom-desc">
-      <div class="desc-label left">
-        HIGH RANDOMNESS
-        <span class="sub">Creative, unpredictable</span>
-        <span class="sub">Requires heavy verification</span>
-      </div>
-      <div class="desc-label right">
-        LESS RANDOMNESS
-        <span class="sub">Deterministic, precise</span>
-        <span class="sub">Code-controlled output</span>
-      </div>
+  <!-- Bottom descriptors -->
+  <div class="bottom-desc">
+    <div class="desc-block left">
+      <div class="heading">High Randomness</div>
+      <div class="sub">Creative, unpredictable</div>
+      <div class="sub">Requires heavy verification</div>
+    </div>
+    <div class="desc-block right">
+      <div class="heading">Less Randomness</div>
+      <div class="sub">Deterministic, precise</div>
+      <div class="sub">Code-controlled output</div>
     </div>
   </div>
 
-  <!-- Noise grain overlay -->
+  <!-- Grain -->
   <svg class="grain" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
     <filter id="grainFilter">
       <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch">
@@ -410,38 +440,38 @@
 <script>
 (function() {
   var tools = [
-    { name: 'NotebookLM',  type: 'Audio / Summary', cls: 't1',  pct: 3  },
-    { name: 'ChatGPT',     type: 'Text + Image',    cls: 't2',  pct: 17 },
-    { name: 'Canva',       type: 'AI Design',       cls: 't3c', pct: 31 },
-    { name: 'Gamma',       type: 'Presentations',   cls: 't4',  pct: 43 },
-    { name: 'AI Studio',   type: 'Two-Stage',       cls: 't5',  pct: 57 },
-    { name: 'Copilot',     type: 'Code Assist',     cls: 't6',  pct: 71 },
-    { name: 'Figma',       type: 'Design System',   cls: 't7',  pct: 84 },
-    { name: 'Claude Code', type: 'Deterministic',   cls: 't8',  pct: 97 }
+    { name: 'NotebookLM',  type: 'Audio / Summary', cls: 'c1', pct: 4   },
+    { name: 'ChatGPT',     type: 'Text + Image',    cls: 'c2', pct: 18  },
+    { name: 'Canva',       type: 'AI Design',       cls: 'c3', pct: 32  },
+    { name: 'Gamma',       type: 'Presentations',   cls: 'c4', pct: 44  },
+    { name: 'AI Studio',   type: 'Two-Stage',       cls: 'c5', pct: 58  },
+    { name: 'Copilot',     type: 'Code Assist',     cls: 'c6', pct: 72  },
+    { name: 'Figma',       type: 'Design System',   cls: 'c7', pct: 85  },
+    { name: 'Claude Code', type: 'Deterministic',   cls: 'c8', pct: 97  }
   ];
 
-  var markersEl = document.getElementById('markers');
-  var toolRow = document.getElementById('toolRow');
+  var dotsEl = document.getElementById('dots');
+  var labelsEl = document.getElementById('labels');
 
-  tools.forEach(function(tool, i) {
+  tools.forEach(function(t, i) {
     // Dot on bar
-    var dot = document.createElement('div');
-    dot.className = 'marker-dot';
-    dot.style.left = tool.pct + '%';
-    dot.style.animation = 'dotIn 0.4s ' + (1.8 + i * 0.1) + 's ease-out forwards';
-    markersEl.appendChild(dot);
+    var d = document.createElement('div');
+    d.className = 'dot';
+    d.style.left = t.pct + '%';
+    d.style.animation = 'dotPop 0.4s ' + (1.6 + i * 0.12) + 's ease-out forwards';
+    dotsEl.appendChild(d);
 
-    // Label below bar — alternate rows
-    var isTop = (i % 2 === 0);
-    var item = document.createElement('div');
-    item.className = 'tool-item ' + tool.cls + (isTop ? ' row-top' : ' row-bot');
-    item.style.left = tool.pct + '%';
-    item.style.animation = 'labelIn 0.5s ' + (2.4 + i * 0.15) + 's ease-out forwards';
-    item.innerHTML =
+    // Label — odd index = top row, even index = bottom row
+    var row = (i % 2 === 0) ? 'top' : 'bot';
+    var el = document.createElement('div');
+    el.className = 'label-item ' + t.cls + ' ' + row;
+    el.style.left = t.pct + '%';
+    el.style.animation = 'labelUp 0.5s ' + (2.2 + i * 0.15) + 's ease-out forwards';
+    el.innerHTML =
       '<div class="stem"></div>' +
-      '<div class="tool-name">' + tool.name + '</div>' +
-      '<div class="tool-type">' + tool.type + '</div>';
-    toolRow.appendChild(item);
+      '<div class="name">' + t.name + '</div>' +
+      '<div class="type">' + t.type + '</div>';
+    labelsEl.appendChild(el);
   });
 })();
 </script>
