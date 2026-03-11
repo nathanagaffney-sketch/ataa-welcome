@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spectrum — Emergence</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slide {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #1a1a2e;
+  }
+
+  /* ── Fractal noise layer ── */
+  .noise-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ── Pulsing glow layer ── */
+  .glow-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ── Rule line layer ── */
+  .rule-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* ── Text content ── */
+  .content {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 8%;
+    padding-right: 8%;
+  }
+
+  .section-label {
+    font-family: Calibri, 'Segoe UI', system-ui, sans-serif;
+    font-size: clamp(12px, 1.4vw, 18px);
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #8faa6b;
+    margin-bottom: 1.2vh;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s 0.3s ease-out forwards;
+  }
+
+  .title {
+    font-family: Candara, 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: clamp(36px, 5.5vw, 72px);
+    font-weight: 700;
+    color: #f0ece2;
+    line-height: 1.15;
+    margin-bottom: 1.5vh;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s 0.6s ease-out forwards;
+  }
+
+  .subtitle {
+    font-family: Calibri, 'Segoe UI', system-ui, sans-serif;
+    font-size: clamp(16px, 2.2vw, 28px);
+    font-weight: 400;
+    color: #d4a574;
+    line-height: 1.4;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s 0.9s ease-out forwards;
+  }
+
+  /* ── Spectrum bar ── */
+  .spectrum-bar-container {
+    position: absolute;
+    left: 20%;
+    width: 60%;
+    top: 63%;
+    height: 28px;
+    z-index: 5;
+    opacity: 0;
+    animation: fadeSlideUp 1s 1.2s ease-out forwards;
+  }
+
+  .spectrum-bar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #d4a574, #8faa6b);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .spectrum-bar-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.10), transparent);
+    animation: scanHighlight 4s ease-in-out infinite;
+  }
+
+  @keyframes scanHighlight {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(500%); }
+  }
+
+  /* ── Tick marks ── */
+  .tick-marks {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tick {
+    width: 2px;
+    height: 8px;
+    background: rgba(240, 236, 226, 0.5);
+    opacity: 0;
+    animation: tickFadeIn 0.4s ease-out forwards;
+  }
+
+  .tick:nth-child(1) { animation-delay: 1.4s; }
+  .tick:nth-child(2) { animation-delay: 1.6s; }
+  .tick:nth-child(3) { animation-delay: 1.8s; }
+  .tick:nth-child(4) { animation-delay: 2.0s; }
+  .tick:nth-child(5) { animation-delay: 2.2s; }
+
+  @keyframes tickFadeIn {
+    from { opacity: 0; transform: scaleY(0); }
+    to   { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ── Progress marker ── */
+  .marker {
+    position: absolute;
+    top: -16px;
+    width: 12px;
+    height: 12px;
+    background: #f0ece2;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: markerAppear 0.6s 2.4s ease-out forwards;
+    box-shadow: 0 0 8px rgba(240, 236, 226, 0.4);
+  }
+
+  @keyframes markerAppear {
+    from { opacity: 0; transform: translateX(-50%) scale(0); }
+    to   { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="slide" id="slide">
+  <!-- Noise: SVG with animated feTurbulence -->
+  <svg class="noise-layer" id="noiseLayer" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise">
+        <animate attributeName="baseFrequency" values="0.65;0.68;0.65" dur="8s" repeatCount="indefinite"/>
+      </feTurbulence>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+  </svg>
+
+  <!-- Glow: radial gradient with pulse -->
+  <svg class="glow-layer" id="glowLayer" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <defs>
+      <radialGradient id="glowGrad" cx="0.4" cy="0.5" r="0.4">
+        <stop offset="0%" stop-color="#d4a574" id="glowStop1"/>
+        <stop offset="100%" stop-color="#d4a574" stop-opacity="0" id="glowStop2"/>
+      </radialGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#glowGrad)">
+      <animate attributeName="opacity" values="0.06;0.09;0.06" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </svg>
+
+  <!-- Rule line: animated cubic bezier -->
+  <svg class="rule-layer" id="ruleLayer" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1920 1080">
+    <path id="rulePath" stroke="#8faa6b" stroke-opacity="0.35" stroke-width="1.5" fill="none">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" id="ruleAnim"/>
+    </path>
+  </svg>
+
+  <!-- Text -->
+  <div class="content">
+    <div class="section-label">THE SPECTRUM</div>
+    <div class="title">Randomness Spectrum</div>
+    <div class="subtitle">Every AI tool sits somewhere on this line</div>
+  </div>
+
+  <!-- Spectrum bar -->
+  <div class="spectrum-bar-container">
+    <div class="tick-marks">
+      <div class="tick"></div>
+      <div class="tick"></div>
+      <div class="tick"></div>
+      <div class="tick"></div>
+      <div class="tick"></div>
+    </div>
+    <div class="spectrum-bar">
+      <div class="spectrum-bar-highlight"></div>
+    </div>
+    <div class="marker" id="marker"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var progress = 0.14;
+
+  // ── Noise opacity: 0.04 * (1 - progress) ──
+  var noiseOpacity = 0.04 * (1 - progress);
+  var noiseLayer = document.getElementById('noiseLayer');
+  if (noiseOpacity < 0.005) {
+    noiseLayer.style.display = 'none';
+  } else {
+    noiseLayer.style.opacity = noiseOpacity;
+  }
+
+  // ── Glow color: amber (progress < 0.5) ──
+  var glowColor = '#d4a574';
+  var baseGlowOpacity = 0.06;
+  var glowLo = Math.max(0, baseGlowOpacity - 0.03);
+  var glowHi = baseGlowOpacity + 0.03;
+
+  document.getElementById('glowStop1').setAttribute('stop-color', glowColor);
+  document.getElementById('glowStop2').setAttribute('stop-color', glowColor);
+
+  var cx = (600 + progress * 200) / 1920;
+  var cy = (540 + Math.sin(progress * Math.PI) * 80) / 1080;
+  var glowGrad = document.getElementById('glowGrad');
+  glowGrad.setAttribute('cx', cx.toFixed(3));
+  glowGrad.setAttribute('cy', cy.toFixed(3));
+  glowGrad.setAttribute('r', (500 / 1920).toFixed(3));
+
+  var glowRect = document.querySelector('#glowLayer rect');
+  var animEl = glowRect.querySelector('animate');
+  animEl.setAttribute('values', glowLo + ';' + glowHi + ';' + glowLo);
+
+  // ── Rule line: y=92%, amplitude = (1 - progress) * 12% ──
+  var lineY = 1080 * 0.92;
+  var amplitude = (1 - progress) * (1080 * 0.12);
+  var cp1y = lineY - amplitude;
+  var cp2y = lineY + amplitude;
+
+  var amp2 = amplitude * 0.7;
+  var cp1y2 = lineY - amp2;
+  var cp2y2 = lineY + amp2;
+
+  var d1 = 'M 0 ' + lineY + ' C 633 ' + cp1y + ' 1267 ' + cp2y + ' 1920 ' + lineY;
+  var d2 = 'M 0 ' + lineY + ' C 633 ' + cp2y2 + ' 1267 ' + cp1y2 + ' 1920 ' + lineY;
+  var ruleAnim = document.getElementById('ruleAnim');
+  ruleAnim.setAttribute('values', d1 + ';' + d2 + ';' + d1);
+  document.getElementById('rulePath').setAttribute('d', d1);
+
+  // ── Position marker at progress point on the bar ──
+  var marker = document.getElementById('marker');
+  marker.style.left = (progress * 100) + '%';
+})();
+</script>
+</body>
+</html>
