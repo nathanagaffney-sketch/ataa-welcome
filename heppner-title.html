@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United States v. Heppner</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0e1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+  }
+
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 56.25vw; /* 16:9 */
+    max-height: 100vh;
+    max-width: 177.78vh;
+  }
+
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  #particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #energy {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Shimmer sweeps */
+  .shimmer-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(120, 160, 220, 0.06) 42%,
+      rgba(180, 210, 255, 0.12) 50%,
+      rgba(120, 160, 220, 0.06) 58%,
+      transparent 65%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: shimmerSweep 7s ease-in-out infinite;
+  }
+
+  .shimmer-overlay-2 {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: linear-gradient(
+      250deg,
+      transparent 0%,
+      transparent 30%,
+      rgba(212, 175, 55, 0.04) 45%,
+      rgba(255, 215, 80, 0.08) 50%,
+      rgba(212, 175, 55, 0.04) 55%,
+      transparent 70%,
+      transparent 100%
+    );
+    background-size: 350% 100%;
+    animation: shimmerSweep2 10s ease-in-out infinite 3s;
+  }
+
+  @keyframes shimmerSweep {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  @keyframes shimmerSweep2 {
+    0%   { background-position: -100% 0; }
+    100% { background-position: 250% 0; }
+  }
+
+  /* Gavel glow — pulses around the gavel area (upper-left quadrant) */
+  .gavel-glow {
+    position: absolute;
+    top: 8%;
+    left: 15%;
+    width: 35%;
+    height: 50%;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(180, 200, 240, 0.08) 0%, transparent 70%);
+    animation: gavelPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes gavelPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.08); }
+  }
+
+  /* Scales of justice glow — right side */
+  .scales-glow {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 30%;
+    height: 55%;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(100, 180, 255, 0.06) 0%, transparent 70%);
+    animation: scalesFloat 5s ease-in-out infinite 1.5s;
+  }
+
+  @keyframes scalesFloat {
+    0%, 100% { opacity: 0.3; transform: translateY(0) scale(1); }
+    50%      { opacity: 0.8; transform: translateY(-2%) scale(1.05); }
+  }
+
+  /* Title text glow */
+  .title-glow {
+    position: absolute;
+    top: 35%;
+    left: 10%;
+    width: 55%;
+    height: 25%;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 40%;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+    animation: titlePulse 5s ease-in-out infinite;
+  }
+
+  @keyframes titlePulse {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+
+  /* Digital dissolve edge — right side of gavel */
+  .dissolve-edge {
+    position: absolute;
+    top: 15%;
+    left: 40%;
+    width: 15%;
+    height: 40%;
+    z-index: 5;
+    pointer-events: none;
+    background: radial-gradient(ellipse, rgba(100, 180, 255, 0.05) 0%, transparent 70%);
+    animation: dissolveFlicker 2s ease-in-out infinite;
+  }
+
+  @keyframes dissolveFlicker {
+    0%, 100% { opacity: 0.4; transform: scaleX(1); }
+    30%      { opacity: 0.9; transform: scaleX(1.1); }
+    70%      { opacity: 0.5; transform: scaleX(0.95); }
+  }
+
+  /* Vignette */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(5, 8, 16, 0.5) 100%);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img class="slide-bg" src="heppner_slide3.png" alt="United States v. Heppner">
+
+  <canvas id="particles"></canvas>
+  <canvas id="energy"></canvas>
+
+  <div class="shimmer-overlay"></div>
+  <div class="shimmer-overlay-2"></div>
+
+  <div class="gavel-glow"></div>
+  <div class="scales-glow"></div>
+  <div class="title-glow"></div>
+  <div class="dissolve-edge"></div>
+
+  <div class="vignette"></div>
+</div>
+
+<script>
+(() => {
+  const pCanvas = document.getElementById('particles');
+  const pCtx = pCanvas.getContext('2d');
+  const eCanvas = document.getElementById('energy');
+  const eCtx = eCanvas.getContext('2d');
+
+  let W, H;
+
+  function resize() {
+    const rect = pCanvas.parentElement.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    for (const c of [pCanvas, eCanvas]) {
+      c.width = W * devicePixelRatio;
+      c.height = H * devicePixelRatio;
+      c.style.width = W + 'px';
+      c.style.height = H + 'px';
+      c.getContext('2d').setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  // ── PARTICLES — digital dissolution motes (blue-white + gold) ──
+  const PARTICLE_COUNT = 90;
+  const particles = [];
+
+  function createParticle(init) {
+    const isBlue = Math.random() < 0.6;
+    const isBig = Math.random() < 0.12;
+    return {
+      x: init ? Math.random() * W : (W * 0.3 + Math.random() * W * 0.5),
+      y: init ? Math.random() * H : Math.random() * H,
+      vx: (Math.random() - 0.3) * 0.8,
+      vy: -(0.15 + Math.random() * 0.5),
+      r: isBig ? (2.5 + Math.random() * 3) : (0.8 + Math.random() * 2),
+      opacity: isBig ? (0.3 + Math.random() * 0.3) : (0.15 + Math.random() * 0.35),
+      hue: isBlue ? (200 + Math.random() * 30) : (35 + Math.random() * 20),
+      sat: isBlue ? (60 + Math.random() * 30) : (75 + Math.random() * 20),
+      lightness: isBlue ? (70 + Math.random() * 15) : 65,
+      life: init ? Math.random() * 300 : 0,
+      maxLife: 250 + Math.random() * 400,
+      twinkleSpeed: 0.02 + Math.random() * 0.04,
+      twinklePhase: Math.random() * Math.PI * 2,
+    };
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push(createParticle(true));
+  }
+
+  function drawParticle(p, time) {
+    let alpha = p.opacity;
+    const fadeIn = 50, fadeOut = 70;
+    if (p.life < fadeIn) alpha *= p.life / fadeIn;
+    if (p.life > p.maxLife - fadeOut) alpha *= (p.maxLife - p.life) / fadeOut;
+    alpha *= 0.7 + 0.3 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
+    if (alpha <= 0.01) return;
+
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha})`;
+    pCtx.fill();
+
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
+    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.18})`;
+    pCtx.fill();
+
+    if (p.r > 3) {
+      pCtx.beginPath();
+      pCtx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+      pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.06})`;
+      pCtx.fill();
+    }
+  }
+
+  // ── ENERGY STREAMS — digital light trails flowing from gavel dissolution ──
+  let energyTime = 0;
+  const streamPoints = [
+    { x: 0.42, y: 0.25 },  // dissolution edge
+    { x: 0.55, y: 0.20 },  // toward scales
+    { x: 0.70, y: 0.30 },  // scales area
+    { x: 0.80, y: 0.15 },  // upper right
+    { x: 0.60, y: 0.50 },  // mid right
+  ];
+
+  const streamConnections = [
+    [0, 1], [1, 2], [2, 3], [0, 4], [1, 4],
+  ];
+
+  function drawEnergyStreams(time) {
+    eCtx.clearRect(0, 0, W, H);
+    energyTime += 0.004;
+
+    for (const [a, b] of streamConnections) {
+      const ax = streamPoints[a].x * W;
+      const ay = streamPoints[a].y * H;
+      const bx = streamPoints[b].x * W;
+      const by = streamPoints[b].y * H;
+
+      const baseAlpha = 0.03 + 0.03 * Math.sin(energyTime * 2 + a + b);
+      const mx = (ax + bx) / 2 + Math.sin(energyTime * 1.5 + a) * W * 0.025;
+      const my = (ay + by) / 2 + Math.cos(energyTime * 1.2 + b) * H * 0.025;
+
+      eCtx.beginPath();
+      eCtx.moveTo(ax, ay);
+      eCtx.quadraticCurveTo(mx, my, bx, by);
+      eCtx.strokeStyle = `rgba(100, 180, 255, ${baseAlpha})`;
+      eCtx.lineWidth = 1;
+      eCtx.stroke();
+
+      const t = (Math.sin(energyTime * 1.5 + a * 2) + 1) / 2;
+      const dotX = (1 - t) * (1 - t) * ax + 2 * (1 - t) * t * mx + t * t * bx;
+      const dotY = (1 - t) * (1 - t) * ay + 2 * (1 - t) * t * my + t * t * by;
+
+      eCtx.beginPath();
+      eCtx.arc(dotX, dotY, 2.5, 0, Math.PI * 2);
+      eCtx.fillStyle = `rgba(150, 200, 255, ${baseAlpha * 4})`;
+      eCtx.fill();
+
+      eCtx.beginPath();
+      eCtx.arc(dotX, dotY, 8, 0, Math.PI * 2);
+      eCtx.fillStyle = `rgba(150, 200, 255, ${baseAlpha * 1.2})`;
+      eCtx.fill();
+    }
+  }
+
+  // ── ANIMATION LOOP ──
+  let frameCount = 0;
+
+  function animate() {
+    frameCount++;
+    pCtx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life++;
+      p.vx += (Math.random() - 0.5) * 0.02;
+      p.vx = Math.max(-0.8, Math.min(0.8, p.vx));
+
+      drawParticle(p, frameCount);
+
+      if (p.life >= p.maxLife || p.y < -30 || p.x < -30 || p.x > W + 30) {
+        particles[i] = createParticle(false);
+      }
+    }
+
+    drawEnergyStreams(frameCount);
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+</script>
+
+</body>
+</html>

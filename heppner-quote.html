@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heppner — A Case of First Impression</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0e1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+  }
+
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 56.25vw;
+    max-height: 100vh;
+    max-width: 177.78vh;
+  }
+
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  #particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Soft shimmer — contemplative, slow */
+  .shimmer-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      120deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(212, 175, 55, 0.04) 44%,
+      rgba(255, 215, 80, 0.08) 50%,
+      rgba(212, 175, 55, 0.04) 56%,
+      transparent 65%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: shimmerSweep 9s ease-in-out infinite;
+  }
+
+  .shimmer-overlay-2 {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      240deg,
+      transparent 0%,
+      transparent 32%,
+      rgba(150, 180, 220, 0.03) 44%,
+      rgba(180, 210, 255, 0.06) 50%,
+      rgba(150, 180, 220, 0.03) 56%,
+      transparent 68%,
+      transparent 100%
+    );
+    background-size: 350% 100%;
+    animation: shimmerSweep2 12s ease-in-out infinite 4s;
+  }
+
+  @keyframes shimmerSweep {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  @keyframes shimmerSweep2 {
+    0%   { background-position: -100% 0; }
+    100% { background-position: 250% 0; }
+  }
+
+  /* Column glow — left pillar */
+  .pillar-glow-left {
+    position: absolute;
+    top: 5%;
+    left: 0%;
+    width: 12%;
+    height: 90%;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(180, 160, 120, 0.06) 0%, transparent 70%);
+    animation: pillarPulse 6s ease-in-out infinite;
+  }
+
+  /* Column glow — right pillar */
+  .pillar-glow-right {
+    position: absolute;
+    top: 5%;
+    right: 0%;
+    width: 12%;
+    height: 90%;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(180, 160, 120, 0.06) 0%, transparent 70%);
+    animation: pillarPulse 6s ease-in-out infinite 3s;
+  }
+
+  @keyframes pillarPulse {
+    0%, 100% { opacity: 0.3; }
+    50%      { opacity: 1; }
+  }
+
+  /* Scales silhouette glow — top center */
+  .scales-glow {
+    position: absolute;
+    top: 0%;
+    left: 30%;
+    width: 40%;
+    height: 35%;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(120, 150, 200, 0.05) 0%, transparent 70%);
+    animation: scalesBreathe 5s ease-in-out infinite 1s;
+  }
+
+  @keyframes scalesBreathe {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 0.9; transform: scale(1.04); }
+  }
+
+  /* Text area subtle glow — center of slide */
+  .text-glow {
+    position: absolute;
+    top: 25%;
+    left: 15%;
+    width: 70%;
+    height: 50%;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 30%;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.02) 0%, transparent 65%);
+    animation: textPulse 7s ease-in-out infinite;
+  }
+
+  @keyframes textPulse {
+    0%, 100% { opacity: 0.3; }
+    50%      { opacity: 1; }
+  }
+
+  /* Bokeh enhancement — breathing warm spots */
+  .bokeh-1 {
+    position: absolute;
+    bottom: 15%;
+    left: 5%;
+    width: 18%;
+    height: 30%;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+    animation: bokehFloat 8s ease-in-out infinite;
+  }
+
+  .bokeh-2 {
+    position: absolute;
+    top: 25%;
+    left: 8%;
+    width: 14%;
+    height: 22%;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+    animation: bokehFloat 7s ease-in-out infinite 2s;
+  }
+
+  .bokeh-3 {
+    position: absolute;
+    bottom: 30%;
+    right: 15%;
+    width: 12%;
+    height: 20%;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+    animation: bokehFloat 9s ease-in-out infinite 4s;
+  }
+
+  @keyframes bokehFloat {
+    0%, 100% { opacity: 0.4; transform: translate(0, 0) scale(1); }
+    33%      { opacity: 0.8; transform: translate(3%, -2%) scale(1.08); }
+    66%      { opacity: 0.6; transform: translate(-2%, 1%) scale(1.03); }
+  }
+
+  /* Vignette */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(5, 8, 16, 0.45) 100%);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img class="slide-bg" src="heppner_slide4.png" alt="A case of first impression on privacy, privilege, and work product with AI">
+
+  <canvas id="particles"></canvas>
+
+  <div class="shimmer-overlay"></div>
+  <div class="shimmer-overlay-2"></div>
+
+  <div class="pillar-glow-left"></div>
+  <div class="pillar-glow-right"></div>
+  <div class="scales-glow"></div>
+  <div class="text-glow"></div>
+
+  <div class="bokeh-1"></div>
+  <div class="bokeh-2"></div>
+  <div class="bokeh-3"></div>
+
+  <div class="vignette"></div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+
+  let W, H;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * devicePixelRatio;
+    canvas.height = H * devicePixelRatio;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  // ── PARTICLES — warm bokeh dust, slow and contemplative ──
+  const PARTICLE_COUNT = 60;
+  const particles = [];
+
+  function createParticle(init) {
+    const isGold = Math.random() < 0.7;
+    const isBig = Math.random() < 0.1;
+    return {
+      x: Math.random() * W,
+      y: init ? Math.random() * H : H + Math.random() * 50,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -(0.1 + Math.random() * 0.3),
+      r: isBig ? (3 + Math.random() * 3) : (0.8 + Math.random() * 2),
+      opacity: isBig ? (0.2 + Math.random() * 0.2) : (0.1 + Math.random() * 0.25),
+      hue: isGold ? (35 + Math.random() * 20) : (210 + Math.random() * 20),
+      sat: isGold ? (70 + Math.random() * 25) : (40 + Math.random() * 30),
+      lightness: isGold ? (65 + Math.random() * 15) : (70 + Math.random() * 10),
+      life: init ? Math.random() * 400 : 0,
+      maxLife: 350 + Math.random() * 500,
+      twinkleSpeed: 0.015 + Math.random() * 0.025,
+      twinklePhase: Math.random() * Math.PI * 2,
+    };
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push(createParticle(true));
+  }
+
+  function drawParticle(p, time) {
+    let alpha = p.opacity;
+    const fadeIn = 60, fadeOut = 80;
+    if (p.life < fadeIn) alpha *= p.life / fadeIn;
+    if (p.life > p.maxLife - fadeOut) alpha *= (p.maxLife - p.life) / fadeOut;
+    alpha *= 0.6 + 0.4 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
+    if (alpha <= 0.01) return;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha})`;
+    ctx.fill();
+
+    // Soft glow
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.15})`;
+    ctx.fill();
+
+    if (p.r > 3) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.05})`;
+      ctx.fill();
+    }
+  }
+
+  let frameCount = 0;
+
+  function animate() {
+    frameCount++;
+    ctx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life++;
+      p.vx += (Math.random() - 0.5) * 0.015;
+      p.vx = Math.max(-0.5, Math.min(0.5, p.vx));
+
+      drawParticle(p, frameCount);
+
+      if (p.life >= p.maxLife || p.y < -30 || p.x < -30 || p.x > W + 30) {
+        particles[i] = createParticle(false);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+</script>
+
+</body>
+</html>
