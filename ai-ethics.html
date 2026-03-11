@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 Key AI Ethics Rules for Lawyers</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #050810;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+  }
+
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 56.25vw; /* 16:9 */
+    max-height: 100vh;
+    max-width: 177.78vh;
+  }
+
+  .infographic-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+  }
+
+  #particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ── Energy field canvas (connecting lines between icons) ── */
+  #energy {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* ── Ambient shimmer — wider, brighter, two layers ── */
+  .shimmer-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(212, 175, 55, 0.08) 42%,
+      rgba(255, 215, 80, 0.14) 50%,
+      rgba(212, 175, 55, 0.08) 58%,
+      transparent 65%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: shimmerSweep 6s ease-in-out infinite;
+  }
+
+  .shimmer-overlay-2 {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: linear-gradient(
+      250deg,
+      transparent 0%,
+      transparent 30%,
+      rgba(100, 180, 255, 0.05) 45%,
+      rgba(100, 180, 255, 0.09) 50%,
+      rgba(100, 180, 255, 0.05) 55%,
+      transparent 70%,
+      transparent 100%
+    );
+    background-size: 350% 100%;
+    animation: shimmerSweep2 9s ease-in-out infinite 3s;
+  }
+
+  @keyframes shimmerSweep {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  @keyframes shimmerSweep2 {
+    0%   { background-position: -100% 0; }
+    100% { background-position: 250% 0; }
+  }
+
+  /* ── Circuit glow lines — bigger, brighter, with traveling light ── */
+  .circuit-glow {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .circuit-left {
+    top: 5.5%;
+    left: 2%;
+    width: 28%;
+    height: 3.5%;
+    box-shadow: 0 0 25px 8px rgba(212, 175, 55, 0.35),
+                0 0 50px 15px rgba(212, 175, 55, 0.15),
+                0 0 80px 25px rgba(212, 175, 55, 0.05);
+    animation: circuitPulse 2.5s ease-in-out infinite;
+  }
+
+  .circuit-right {
+    top: 5.5%;
+    right: 2%;
+    width: 28%;
+    height: 3.5%;
+    box-shadow: 0 0 25px 8px rgba(212, 175, 55, 0.35),
+                0 0 50px 15px rgba(212, 175, 55, 0.15),
+                0 0 80px 25px rgba(212, 175, 55, 0.05);
+    animation: circuitPulse 2.5s ease-in-out infinite 1.25s;
+  }
+
+  /* Traveling light inside circuit lines */
+  .circuit-glow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 220, 100, 0.5), transparent);
+    animation: travelLight 3s ease-in-out infinite;
+  }
+
+  .circuit-right::after {
+    animation-delay: 1.5s;
+    animation-direction: reverse;
+  }
+
+  @keyframes travelLight {
+    0%   { left: -40%; }
+    100% { left: 100%; }
+  }
+
+  @keyframes circuitPulse {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+
+  /* ── Icon halos — much more dramatic ── */
+  .icon-halo {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 50%;
+    animation: haloBreathe 3s ease-in-out infinite;
+  }
+
+  .icon-halo::before {
+    content: '';
+    position: absolute;
+    inset: -30%;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    animation: haloRing 3s ease-in-out infinite;
+    animation-delay: inherit;
+  }
+
+  .icon-halo::after {
+    content: '';
+    position: absolute;
+    inset: -60%;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.08);
+    animation: haloRing 3s ease-in-out infinite;
+    animation-delay: inherit;
+  }
+
+  @keyframes haloRing {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    50%      { opacity: 1; transform: scale(1); }
+  }
+
+  .halo-1 {
+    top: 22%; left: 5.5%; width: 7%; height: 12.5%;
+    box-shadow: 0 0 30px 12px rgba(212, 175, 55, 0.35),
+                0 0 60px 25px rgba(212, 175, 55, 0.15),
+                0 0 100px 40px rgba(212, 175, 55, 0.05);
+    animation-delay: 0s;
+  }
+
+  .halo-2 {
+    top: 46%; left: 5.5%; width: 7%; height: 12.5%;
+    box-shadow: 0 0 30px 12px rgba(212, 175, 55, 0.35),
+                0 0 60px 25px rgba(212, 175, 55, 0.15),
+                0 0 100px 40px rgba(212, 175, 55, 0.05);
+    animation-delay: 0.6s;
+  }
+
+  .halo-3 {
+    top: 22%; left: 49%; width: 7%; height: 12.5%;
+    box-shadow: 0 0 30px 12px rgba(212, 175, 55, 0.35),
+                0 0 60px 25px rgba(212, 175, 55, 0.15),
+                0 0 100px 40px rgba(212, 175, 55, 0.05);
+    animation-delay: 1.2s;
+  }
+
+  .halo-4 {
+    top: 46%; left: 49%; width: 7%; height: 12.5%;
+    box-shadow: 0 0 30px 12px rgba(212, 175, 55, 0.35),
+                0 0 60px 25px rgba(212, 175, 55, 0.15),
+                0 0 100px 40px rgba(212, 175, 55, 0.05);
+    animation-delay: 1.8s;
+  }
+
+  .halo-5 {
+    top: 70%; left: 27%; width: 7%; height: 12.5%;
+    box-shadow: 0 0 30px 12px rgba(212, 175, 55, 0.35),
+                0 0 60px 25px rgba(212, 175, 55, 0.15),
+                0 0 100px 40px rgba(212, 175, 55, 0.05);
+    animation-delay: 2.4s;
+  }
+
+  @keyframes haloBreathe {
+    0%, 100% { opacity: 0.25; transform: scale(1); }
+    50%      { opacity: 0.85; transform: scale(1.12); }
+  }
+
+  /* ── Title glow ── */
+  .title-glow {
+    position: absolute;
+    top: 2%;
+    left: 25%;
+    width: 50%;
+    height: 12%;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+    animation: titlePulse 4s ease-in-out infinite;
+  }
+
+  @keyframes titlePulse {
+    0%, 100% { opacity: 0.4; transform: scaleX(1); }
+    50%      { opacity: 1; transform: scaleX(1.05); }
+  }
+
+  /* ── Bottom rule emphasis ── */
+  .footer-glow {
+    position: absolute;
+    bottom: 1%;
+    left: 20%;
+    width: 60%;
+    height: 5%;
+    z-index: 5;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+    animation: titlePulse 5s ease-in-out infinite 2s;
+  }
+
+  /* ── Vignette — deeper ── */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(5, 8, 16, 0.5) 100%);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img class="infographic-bg" src="ai_ethics_rules_infographic.png" alt="5 Key AI Ethics Rules for Lawyers">
+
+  <canvas id="particles"></canvas>
+  <canvas id="energy"></canvas>
+
+  <div class="shimmer-overlay"></div>
+  <div class="shimmer-overlay-2"></div>
+
+  <div class="circuit-glow circuit-left"></div>
+  <div class="circuit-glow circuit-right"></div>
+
+  <div class="title-glow"></div>
+  <div class="footer-glow"></div>
+
+  <div class="icon-halo halo-1"></div>
+  <div class="icon-halo halo-2"></div>
+  <div class="icon-halo halo-3"></div>
+  <div class="icon-halo halo-4"></div>
+  <div class="icon-halo halo-5"></div>
+
+  <div class="vignette"></div>
+</div>
+
+<script>
+(() => {
+  // ── PARTICLES (gold dust motes, more and bigger) ──
+  const pCanvas = document.getElementById('particles');
+  const pCtx = pCanvas.getContext('2d');
+
+  // ── ENERGY FIELD (connecting lines between icons) ──
+  const eCanvas = document.getElementById('energy');
+  const eCtx = eCanvas.getContext('2d');
+
+  let W, H;
+
+  function resize() {
+    const rect = pCanvas.parentElement.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    for (const c of [pCanvas, eCanvas]) {
+      c.width = W * devicePixelRatio;
+      c.height = H * devicePixelRatio;
+      c.style.width = W + 'px';
+      c.style.height = H + 'px';
+      c.getContext('2d').setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  // ── Icon center positions (% of container) ──
+  const iconCenters = [
+    { x: 0.09, y: 0.285 },   // 1 - Competence
+    { x: 0.09, y: 0.525 },   // 2 - Confidentiality
+    { x: 0.525, y: 0.285 },  // 3 - Supervision
+    { x: 0.525, y: 0.525 },  // 4 - Transparency
+    { x: 0.305, y: 0.765 },  // 5 - Accountability
+  ];
+
+  // Connection pairs (which icons connect with energy lines)
+  const connections = [
+    [0, 1], [1, 4], [0, 2], [2, 3], [3, 4], [4, 0],
+  ];
+
+  // ── PARTICLES ──
+  const PARTICLE_COUNT = 120;
+  const particles = [];
+
+  function createParticle(init) {
+    const isBig = Math.random() < 0.15;
+    return {
+      x: Math.random() * W,
+      y: init ? Math.random() * H : H + Math.random() * 40,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: -(0.2 + Math.random() * 0.6),
+      r: isBig ? (3 + Math.random() * 3) : (1 + Math.random() * 2.5),
+      opacity: isBig ? (0.4 + Math.random() * 0.3) : (0.2 + Math.random() * 0.4),
+      hue: 35 + Math.random() * 20,
+      sat: 75 + Math.random() * 20,
+      lightness: isBig ? 75 : 65,
+      life: 0,
+      maxLife: 200 + Math.random() * 500,
+      twinkleSpeed: 0.02 + Math.random() * 0.04,
+      twinklePhase: Math.random() * Math.PI * 2,
+    };
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push(createParticle(true));
+  }
+
+  function drawParticle(p, time) {
+    let alpha = p.opacity;
+    const fadeIn = 50, fadeOut = 70;
+    if (p.life < fadeIn) alpha *= p.life / fadeIn;
+    if (p.life > p.maxLife - fadeOut) alpha *= (p.maxLife - p.life) / fadeOut;
+
+    // Twinkle
+    alpha *= 0.7 + 0.3 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
+    if (alpha <= 0.01) return;
+
+    // Core
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha})`;
+    pCtx.fill();
+
+    // Inner glow
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
+    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.2})`;
+    pCtx.fill();
+
+    // Outer glow for big particles
+    if (p.r > 3) {
+      pCtx.beginPath();
+      pCtx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+      pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.08})`;
+      pCtx.fill();
+    }
+  }
+
+  // ── ENERGY FIELD (subtle flowing lines between icons) ──
+  let energyTime = 0;
+
+  function drawEnergyField(time) {
+    eCtx.clearRect(0, 0, W, H);
+    energyTime += 0.003;
+
+    for (const [a, b] of connections) {
+      const ax = iconCenters[a].x * W;
+      const ay = iconCenters[a].y * H;
+      const bx = iconCenters[b].x * W;
+      const by = iconCenters[b].y * H;
+
+      // Pulsing opacity
+      const baseAlpha = 0.04 + 0.04 * Math.sin(energyTime * 2 + a + b);
+
+      // Draw curved energy line
+      const mx = (ax + bx) / 2 + Math.sin(energyTime * 1.5 + a) * W * 0.03;
+      const my = (ay + by) / 2 + Math.cos(energyTime * 1.2 + b) * H * 0.03;
+
+      eCtx.beginPath();
+      eCtx.moveTo(ax, ay);
+      eCtx.quadraticCurveTo(mx, my, bx, by);
+      eCtx.strokeStyle = `rgba(212, 175, 55, ${baseAlpha})`;
+      eCtx.lineWidth = 1.5;
+      eCtx.stroke();
+
+      // Traveling energy dot along the curve
+      const t = (Math.sin(energyTime * 1.5 + a * 2) + 1) / 2;
+      const dotX = (1 - t) * (1 - t) * ax + 2 * (1 - t) * t * mx + t * t * bx;
+      const dotY = (1 - t) * (1 - t) * ay + 2 * (1 - t) * t * my + t * t * by;
+
+      eCtx.beginPath();
+      eCtx.arc(dotX, dotY, 3, 0, Math.PI * 2);
+      eCtx.fillStyle = `rgba(255, 215, 80, ${baseAlpha * 4})`;
+      eCtx.fill();
+
+      // Dot glow
+      eCtx.beginPath();
+      eCtx.arc(dotX, dotY, 10, 0, Math.PI * 2);
+      eCtx.fillStyle = `rgba(255, 215, 80, ${baseAlpha * 1.5})`;
+      eCtx.fill();
+    }
+  }
+
+  // ── ANIMATION LOOP ──
+  let frameCount = 0;
+
+  function animate() {
+    frameCount++;
+    pCtx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life++;
+
+      // Drift with slight sine wave
+      p.vx += (Math.random() - 0.5) * 0.03;
+      p.vx = Math.max(-0.7, Math.min(0.7, p.vx));
+
+      drawParticle(p, frameCount);
+
+      if (p.life >= p.maxLife || p.y < -30 || p.x < -30 || p.x > W + 30) {
+        particles[i] = createParticle(false);
+      }
+    }
+
+    drawEnergyField(frameCount);
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+</script>
+
+</body>
+</html>
