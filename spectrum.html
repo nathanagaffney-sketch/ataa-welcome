@@ -42,8 +42,8 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 500px 350px at 25% 55%, rgba(212,148,10,0.07), transparent),
-      radial-gradient(ellipse 500px 350px at 75% 55%, rgba(10,143,127,0.06), transparent);
+      radial-gradient(ellipse 500px 350px at 25% 50%, rgba(212,148,10,0.07), transparent),
+      radial-gradient(ellipse 500px 350px at 75% 50%, rgba(10,143,127,0.06), transparent);
     pointer-events: none;
     z-index: 0;
     animation: glowShift 8s ease-in-out infinite alternate;
@@ -73,118 +73,87 @@
     100% { transform: translateY(-280px) translateX(30px); opacity: 0; }
   }
 
-  /* ── Text content ── */
-  .content {
+  /* ── Header ── */
+  .header {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 36px;
+    left: 64px;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 48px;
-  }
-
-  .eyebrow {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--t3);
-    margin-bottom: 12px;
+    opacity: 0;
     animation: fadeIn 1s 0.3s ease both;
   }
-
-  h1 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 80px;
-    line-height: 1.1;
-    text-align: center;
-    animation: fadeIn 1s 0.6s ease both;
-  }
-  h1 .line1 {
-    display: block;
-    color: var(--t1);
-  }
-  h1 .line2 {
-    display: block;
-    background: linear-gradient(90deg, var(--amber-light), var(--teal-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .subtitle {
-    font-size: 26px;
-    color: var(--t2);
-    font-weight: 400;
-    margin-top: 16px;
-    letter-spacing: 0.04em;
-    animation: fadeIn 1s 0.9s ease both;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── Spectrum bar area ── */
-  .spectrum-area {
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 52%;
-    height: 220px;
-    z-index: 2;
-    opacity: 0;
-    animation: fadeIn 1.2s 1.2s ease both;
-  }
-
-  /* End labels */
-  .end-label {
-    position: absolute;
-    top: 0;
-    font-size: 11px;
+  .header .eyebrow {
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--t3);
+    color: var(--amber);
+    margin-bottom: 8px;
   }
-  .end-label.left { left: 0; color: var(--amber); }
-  .end-label.right { right: 0; text-align: right; color: var(--teal); }
-  .end-label .desc {
-    display: block;
-    font-size: 10px;
+  .header h1 {
+    font-family: 'Instrument Serif', serif;
     font-weight: 400;
-    letter-spacing: 0.1em;
-    color: var(--t3);
-    margin-top: 2px;
-    line-height: 1.4;
+    font-size: 52px;
+    color: var(--t1);
+    line-height: 1.1;
   }
 
-  /* The bar track */
-  .bar-track {
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Spectrum zone ── */
+  .spectrum-zone {
     position: absolute;
-    top: 28px;
-    left: 0;
-    right: 0;
-    height: 8px;
+    left: 64px;
+    right: 64px;
+    top: 190px;
+    bottom: 80px;
+    z-index: 2;
+  }
+
+  /* Descriptor labels flanking the bar */
+  .desc-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeIn 0.8s 0.8s ease both;
+  }
+  .desc-label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .desc-label.left { color: var(--amber); }
+  .desc-label.right { text-align: right; color: var(--teal); }
+  .desc-label .sub {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--t3);
+  }
+
+  /* The bar */
+  .bar-wrap {
+    position: relative;
+    height: 24px;
+    border-radius: 12px;
     background: var(--card);
-    border-radius: 4px;
     border: 1px solid var(--border);
     overflow: visible;
   }
-
-  /* Gradient fill */
   .bar-fill {
     position: absolute;
     inset: -1px;
-    border-radius: 4px;
+    border-radius: 12px;
     background: linear-gradient(to right, var(--amber), #B89A3E, #6BA86B, var(--teal));
     opacity: 0;
-    animation: barReveal 1.8s 1.6s ease-out forwards;
+    animation: barReveal 1.8s 1.2s ease-out forwards;
   }
   @keyframes barReveal {
     0% { clip-path: inset(0 100% 0 0); opacity: 1; }
@@ -194,248 +163,136 @@
   /* Glow under bar */
   .bar-glow {
     position: absolute;
-    top: 20px;
+    top: 4px;
     left: 0;
     right: 0;
     height: 24px;
-    background: linear-gradient(to right, rgba(212,148,10,0.15), rgba(10,143,127,0.15));
-    filter: blur(12px);
+    background: linear-gradient(to right, rgba(212,148,10,0.2), rgba(10,143,127,0.2));
+    filter: blur(16px);
     border-radius: 12px;
     opacity: 0;
-    animation: barReveal 2s 1.8s ease-out forwards;
+    animation: barReveal 2s 1.5s ease-out forwards;
   }
 
   /* Scanning beam */
   .scan-beam {
     position: absolute;
-    top: -6px;
-    width: 60px;
-    height: 20px;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.25), transparent);
+    top: -4px;
+    width: 80px;
+    height: 32px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.2), transparent);
     border-radius: 50%;
     opacity: 0;
     animation: scanBeam 5s 3.5s ease-in-out infinite;
   }
   @keyframes scanBeam {
-    0% { left: -60px; opacity: 0; }
+    0% { left: -80px; opacity: 0; }
     5% { opacity: 1; }
     95% { opacity: 1; }
-    100% { left: calc(100% + 60px); opacity: 0; }
+    100% { left: calc(100% + 80px); opacity: 0; }
   }
 
-  /* Tick marks */
-  .ticks {
+  /* ── Tool markers on the bar ── */
+  .markers {
     position: absolute;
-    top: 20px;
+    top: 0;
     left: 0;
     right: 0;
     height: 24px;
   }
-  .tick {
+  .marker-dot {
     position: absolute;
-    top: 0;
-    width: 1px;
-    height: 24px;
-    background: var(--t3);
-    opacity: 0;
-    transform-origin: top;
-  }
-  .tick::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -3px;
-    width: 7px;
-    height: 7px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: inherit;
-    opacity: 0.6;
-  }
-  .tick:nth-child(1) { left: 2%; background: var(--amber); animation: tickIn 0.5s 2.0s ease-out forwards; }
-  .tick:nth-child(2) { left: 16%; background: #D4A030; animation: tickIn 0.5s 2.1s ease-out forwards; }
-  .tick:nth-child(3) { left: 30%; background: #C0A030; animation: tickIn 0.5s 2.2s ease-out forwards; }
-  .tick:nth-child(4) { left: 44%; background: #A0A848; animation: tickIn 0.5s 2.3s ease-out forwards; }
-  .tick:nth-child(5) { left: 58%; background: #80AA60; animation: tickIn 0.5s 2.4s ease-out forwards; }
-  .tick:nth-child(6) { left: 72%; background: #50AE80; animation: tickIn 0.5s 2.5s ease-out forwards; }
-  .tick:nth-child(7) { left: 86%; background: #30B090; animation: tickIn 0.5s 2.6s ease-out forwards; }
-  .tick:nth-child(8) { left: 98%; background: var(--teal); animation: tickIn 0.5s 2.7s ease-out forwards; }
-  @keyframes tickIn {
-    from { opacity: 0; transform: scaleY(0); }
-    to { opacity: 0.4; transform: scaleY(1); }
+    background: var(--t1);
+    border: 2px solid var(--bg);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 2;
   }
 
-  /* Tool labels */
-  .tool-labels {
-    position: absolute;
-    top: 52px;
-    left: 0;
-    right: 0;
+  /* ── Tool labels below bar ── */
+  .tool-row {
+    position: relative;
+    margin-top: 20px;
+    height: 180px;
   }
-  .tool-label {
+  .tool-item {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
     transform: translateX(-50%);
     opacity: 0;
   }
-  .tool-label .name {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--t1);
-    white-space: nowrap;
-    letter-spacing: 0.02em;
-  }
-  .tool-label .desc {
-    font-size: 10px;
-    color: var(--t3);
-    margin-top: 2px;
-    white-space: nowrap;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .tool-label .connector {
+  .tool-item .stem {
     width: 1px;
-    height: 12px;
-    margin-bottom: 4px;
+    height: 20px;
+    margin: 0 auto 8px;
+    opacity: 0.4;
+  }
+  .tool-item .tool-name {
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .tool-item .tool-type {
+    font-size: 13px;
+    color: var(--t3);
+    margin-top: 3px;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
   }
 
-  /* 8 tools evenly spaced: 2%, 16%, 30%, 44%, 58%, 72%, 86%, 98% */
-  .tool-label:nth-child(1) { left: 2%; }
-  .tool-label:nth-child(1) .connector { background: var(--amber); }
-  .tool-label:nth-child(1) .name { color: var(--amber-light); }
-  .tool-label:nth-child(1) { animation: labelIn 0.6s 3.0s ease-out forwards; }
+  /* Stagger: odd labels top row, even labels lower row to prevent overlap */
+  .tool-item.row-top .stem { height: 20px; }
+  .tool-item.row-bot .stem { height: 52px; }
 
-  .tool-label:nth-child(2) { left: 16%; }
-  .tool-label:nth-child(2) .connector { background: #D4A030; }
-  .tool-label:nth-child(2) .name { color: #F0C860; }
-  .tool-label:nth-child(2) { animation: labelIn 0.6s 3.15s ease-out forwards; }
+  /* Per-tool colors — gradient from amber to teal */
+  .t1 .stem { background: var(--amber); }
+  .t1 .tool-name { color: var(--amber-light); }
 
-  .tool-label:nth-child(3) { left: 30%; }
-  .tool-label:nth-child(3) .connector { background: #C0A030; }
-  .tool-label:nth-child(3) .name { color: #E0C860; }
-  .tool-label:nth-child(3) { animation: labelIn 0.6s 3.3s ease-out forwards; }
+  .t2 .stem { background: #D4A030; }
+  .t2 .tool-name { color: #F0C860; }
 
-  .tool-label:nth-child(4) { left: 44%; }
-  .tool-label:nth-child(4) .connector { background: #A0A848; }
-  .tool-label:nth-child(4) .name { color: #C8D070; }
-  .tool-label:nth-child(4) { animation: labelIn 0.6s 3.45s ease-out forwards; }
+  .t3c .stem { background: #C0A030; }
+  .t3c .tool-name { color: #E0C860; }
 
-  .tool-label:nth-child(5) { left: 58%; }
-  .tool-label:nth-child(5) .connector { background: #80AA60; }
-  .tool-label:nth-child(5) .name { color: #B0D088; }
-  .tool-label:nth-child(5) { animation: labelIn 0.6s 3.6s ease-out forwards; }
+  .t4 .stem { background: #A0A848; }
+  .t4 .tool-name { color: #C8D070; }
 
-  .tool-label:nth-child(6) { left: 72%; }
-  .tool-label:nth-child(6) .connector { background: #50AE80; }
-  .tool-label:nth-child(6) .name { color: #90D8B0; }
-  .tool-label:nth-child(6) { animation: labelIn 0.6s 3.75s ease-out forwards; }
+  .t5 .stem { background: #80AA60; }
+  .t5 .tool-name { color: #B0D088; }
 
-  .tool-label:nth-child(7) { left: 86%; }
-  .tool-label:nth-child(7) .connector { background: #30B090; }
-  .tool-label:nth-child(7) .name { color: var(--teal-light); }
-  .tool-label:nth-child(7) { animation: labelIn 0.6s 3.9s ease-out forwards; }
+  .t6 .stem { background: #50AE80; }
+  .t6 .tool-name { color: #90D8B0; }
 
-  .tool-label:nth-child(8) { left: 98%; }
-  .tool-label:nth-child(8) .connector { background: var(--teal); }
-  .tool-label:nth-child(8) .name { color: var(--teal-light); }
-  .tool-label:nth-child(8) { animation: labelIn 0.6s 4.05s ease-out forwards; }
+  .t7 .stem { background: #30B090; }
+  .t7 .tool-name { color: var(--teal-light); }
 
+  .t8 .stem { background: var(--teal); }
+  .t8 .tool-name { color: var(--teal-light); }
+
+  @keyframes dotIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
   @keyframes labelIn {
     from { opacity: 0; transform: translateX(-50%) translateY(8px); }
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
 
-  /* Progress marker */
-  .marker {
+  /* Bottom descriptor labels (mirror) */
+  .bottom-desc {
     position: absolute;
-    top: 16px;
-    z-index: 5;
-    transform: translateX(-50%);
-    opacity: 0;
-    animation: markerIn 0.8s 2.8s ease-out forwards;
-  }
-  .marker-dot {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--amber);
-    border: 3px solid var(--bg);
-    box-shadow: 0 0 12px rgba(212,148,10,0.5), 0 0 24px rgba(212,148,10,0.2);
-    animation: markerPulse 2s 3.5s ease-in-out infinite;
-  }
-  .marker-ring {
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid var(--amber);
-    opacity: 0;
-    animation: ringPulse 2s 3.5s ease-out infinite;
-  }
-  .marker-label {
-    position: absolute;
-    top: -28px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: var(--amber-light);
-    white-space: nowrap;
-    text-shadow: 0 0 8px rgba(212,148,10,0.4);
-  }
-  @keyframes markerIn {
-    from { opacity: 0; transform: translateX(-50%) scale(0); }
-    to { opacity: 1; transform: translateX(-50%) scale(1); }
-  }
-  @keyframes markerPulse {
-    0%, 100% { box-shadow: 0 0 12px rgba(212,148,10,0.5), 0 0 24px rgba(212,148,10,0.2); }
-    50% { box-shadow: 0 0 20px rgba(212,148,10,0.7), 0 0 40px rgba(212,148,10,0.3); }
-  }
-  @keyframes ringPulse {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(2.2); opacity: 0; }
-  }
-
-  /* Bottom end labels (mirror of top) */
-  .bottom-labels {
-    position: absolute;
-    bottom: -80px;
+    bottom: 0;
     left: 0;
     right: 0;
-  }
-  .bottom-label {
-    position: absolute;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
     opacity: 0;
     animation: fadeIn 0.8s 2.5s ease both;
-  }
-  .bottom-label.left { left: 0; color: var(--amber); }
-  .bottom-label.right { right: 0; text-align: right; color: var(--teal); }
-  .bottom-label .desc {
-    display: block;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: var(--t3);
-    margin-top: 2px;
-    line-height: 1.4;
-  }
-
-  /* SVG spectrum visualization */
-  .spectrum-viz {
-    position: absolute;
-    top: 110px;
-    left: 0;
-    right: 0;
-    height: 100px;
-    pointer-events: none;
   }
 
   /* Bottom bar */
@@ -482,115 +339,55 @@
     <div class="particle" style="left:65%; bottom:210px; width:3px; height:3px; background:#3DC4B0; animation-duration:7.5s; animation-delay:3.2s;"></div>
     <div class="particle" style="left:80%; bottom:200px; width:2px; height:2px; background:#D4940A; animation-duration:8.5s; animation-delay:1.8s;"></div>
     <div class="particle" style="left:92%; bottom:230px; width:2px; height:2px; background:#0A8F7F; animation-duration:9.5s; animation-delay:4s;"></div>
-    <div class="particle" style="left:15%; bottom:240px; width:2.5px; height:2.5px; background:#F5DFA0; animation-duration:7s; animation-delay:2s;"></div>
     <div class="particle" style="left:45%; bottom:170px; width:2px; height:2px; background:#A0E5D9; animation-duration:8s; animation-delay:3.5s;"></div>
-    <div class="particle" style="left:72%; bottom:250px; width:3px; height:3px; background:#D4940A; animation-duration:6.5s; animation-delay:0.5s;"></div>
   </div>
 
-  <!-- Text content -->
-  <div class="content">
-    <div class="eyebrow">Section 1 of 3</div>
-    <h1>
-      <span class="line1">The Randomness</span>
-      <span class="line2">Spectrum</span>
-    </h1>
-    <div class="subtitle">Every AI tool sits somewhere on this line</div>
+  <!-- Header — compact, top left -->
+  <div class="header">
+    <div class="eyebrow">The Spectrum</div>
+    <h1>The Randomness Spectrum</h1>
   </div>
 
-  <!-- Spectrum bar area -->
-  <div class="spectrum-area">
-    <!-- End labels -->
-    <div class="end-label left">HIGH RANDOMNESS<span class="desc">Creative, unpredictable<br>Requires heavy verification</span></div>
-    <div class="end-label right">LESS RANDOMNESS<span class="desc">Deterministic, precise<br>Code-controlled output</span></div>
+  <!-- Spectrum zone -->
+  <div class="spectrum-zone">
+    <!-- Descriptor labels above bar -->
+    <div class="desc-labels">
+      <div class="desc-label left">
+        HIGH RANDOMNESS
+        <span class="sub">Creative, unpredictable</span>
+        <span class="sub">Requires heavy verification</span>
+      </div>
+      <div class="desc-label right">
+        LESS RANDOMNESS
+        <span class="sub">Deterministic, precise</span>
+        <span class="sub">Code-controlled output</span>
+      </div>
+    </div>
 
-    <!-- Bar track -->
-    <div class="bar-track">
+    <!-- Bar -->
+    <div class="bar-wrap">
       <div class="bar-fill"></div>
       <div class="scan-beam"></div>
+      <div class="markers" id="markers"></div>
     </div>
-
-    <!-- Glow under bar -->
     <div class="bar-glow"></div>
 
-    <!-- Tick marks -->
-    <div class="ticks">
-      <div class="tick"></div>
-      <div class="tick"></div>
-      <div class="tick"></div>
-      <div class="tick"></div>
-      <div class="tick"></div>
-      <div class="tick"></div>
-      <div class="tick"></div>
-      <div class="tick"></div>
-    </div>
+    <!-- Tool labels — staggered two rows -->
+    <div class="tool-row" id="toolRow"></div>
 
-    <!-- Tool labels along the spectrum -->
-    <div class="tool-labels">
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">NotebookLM</div>
-        <div class="desc">Audio / Summary</div>
+    <!-- Bottom descriptors -->
+    <div class="bottom-desc">
+      <div class="desc-label left">
+        HIGH RANDOMNESS
+        <span class="sub">Creative, unpredictable</span>
+        <span class="sub">Requires heavy verification</span>
       </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">ChatGPT</div>
-        <div class="desc">Text + Image</div>
-      </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">Canva</div>
-        <div class="desc">AI Design</div>
-      </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">Gamma</div>
-        <div class="desc">Presentations</div>
-      </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">AI Studio</div>
-        <div class="desc">Two-Stage</div>
-      </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">Copilot</div>
-        <div class="desc">Code Assist</div>
-      </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">Figma</div>
-        <div class="desc">Design System</div>
-      </div>
-      <div class="tool-label">
-        <div class="connector"></div>
-        <div class="name">Claude Code</div>
-        <div class="desc">Deterministic</div>
+      <div class="desc-label right">
+        LESS RANDOMNESS
+        <span class="sub">Deterministic, precise</span>
+        <span class="sub">Code-controlled output</span>
       </div>
     </div>
-
-    <!-- Bottom end labels -->
-    <div class="bottom-labels">
-      <div class="bottom-label left">HIGH RANDOMNESS<span class="desc">Creative, unpredictable<br>Requires heavy verification</span></div>
-      <div class="bottom-label right">LESS RANDOMNESS<span class="desc">Deterministic, precise<br>Code-controlled output</span></div>
-    </div>
-
-    <!-- SVG waveform visualization -->
-    <svg class="spectrum-viz" viewBox="0 0 1024 100" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#D4940A" stop-opacity="0.15"/>
-          <stop offset="50%" stop-color="#8DAA5A" stop-opacity="0.1"/>
-          <stop offset="100%" stop-color="#0A8F7F" stop-opacity="0.15"/>
-        </linearGradient>
-      </defs>
-      <!-- Chaotic wave on left, smooth on right -->
-      <path id="wave1" fill="none" stroke="url(#waveGrad)" stroke-width="1.5" opacity="0">
-        <animate attributeName="opacity" values="0;0.8" dur="1.5s" begin="2s" fill="freeze"/>
-      </path>
-      <path id="wave2" fill="none" stroke="url(#waveGrad)" stroke-width="1" opacity="0">
-        <animate attributeName="opacity" values="0;0.5" dur="1.5s" begin="2.3s" fill="freeze"/>
-      </path>
-    </svg>
   </div>
 
   <!-- Noise grain overlay -->
@@ -612,48 +409,40 @@
 
 <script>
 (function() {
-  // Generate animated waveforms — chaotic on left, smooth on right
-  function buildWave(yCenter, amplitude, noiseScale, phaseOffset) {
-    var points = [];
-    var steps = 128;
-    for (var i = 0; i <= steps; i++) {
-      var t = i / steps;
-      var x = t * 1024;
-      // Noise decreases left to right (mirroring randomness → deterministic)
-      var chaos = Math.max(0, 1 - t * 1.3);
-      var wave = Math.sin(t * Math.PI * 6 + phaseOffset) * amplitude * (0.3 + chaos * 0.7);
-      // Add high-frequency noise on left side
-      var noise = chaos * noiseScale * (Math.sin(t * 47 + phaseOffset) + Math.sin(t * 73 + phaseOffset * 1.3) * 0.5);
-      var y = yCenter + wave + noise;
-      points.push((i === 0 ? 'M' : 'L') + ' ' + x.toFixed(1) + ' ' + y.toFixed(1));
-    }
-    return points.join(' ');
-  }
+  var tools = [
+    { name: 'NotebookLM',  type: 'Audio / Summary', cls: 't1',  pct: 3  },
+    { name: 'ChatGPT',     type: 'Text + Image',    cls: 't2',  pct: 17 },
+    { name: 'Canva',       type: 'AI Design',       cls: 't3c', pct: 31 },
+    { name: 'Gamma',       type: 'Presentations',   cls: 't4',  pct: 43 },
+    { name: 'AI Studio',   type: 'Two-Stage',       cls: 't5',  pct: 57 },
+    { name: 'Copilot',     type: 'Code Assist',     cls: 't6',  pct: 71 },
+    { name: 'Figma',       type: 'Design System',   cls: 't7',  pct: 84 },
+    { name: 'Claude Code', type: 'Deterministic',   cls: 't8',  pct: 97 }
+  ];
 
-  var wave1Path = buildWave(50, 18, 12, 0);
-  var wave1Path2 = buildWave(50, 18, 12, 0.5);
-  var wave2Path = buildWave(50, 14, 8, 2);
-  var wave2Path2 = buildWave(50, 14, 8, 2.5);
+  var markersEl = document.getElementById('markers');
+  var toolRow = document.getElementById('toolRow');
 
-  var w1 = document.getElementById('wave1');
-  var w2 = document.getElementById('wave2');
-  w1.setAttribute('d', wave1Path);
-  w2.setAttribute('d', wave2Path);
+  tools.forEach(function(tool, i) {
+    // Dot on bar
+    var dot = document.createElement('div');
+    dot.className = 'marker-dot';
+    dot.style.left = tool.pct + '%';
+    dot.style.animation = 'dotIn 0.4s ' + (1.8 + i * 0.1) + 's ease-out forwards';
+    markersEl.appendChild(dot);
 
-  // Animate waves
-  var animW1 = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-  animW1.setAttribute('attributeName', 'd');
-  animW1.setAttribute('values', wave1Path + ';' + wave1Path2 + ';' + wave1Path);
-  animW1.setAttribute('dur', '4s');
-  animW1.setAttribute('repeatCount', 'indefinite');
-  w1.appendChild(animW1);
-
-  var animW2 = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-  animW2.setAttribute('attributeName', 'd');
-  animW2.setAttribute('values', wave2Path + ';' + wave2Path2 + ';' + wave2Path);
-  animW2.setAttribute('dur', '5s');
-  animW2.setAttribute('repeatCount', 'indefinite');
-  w2.appendChild(animW2);
+    // Label below bar — alternate rows
+    var isTop = (i % 2 === 0);
+    var item = document.createElement('div');
+    item.className = 'tool-item ' + tool.cls + (isTop ? ' row-top' : ' row-bot');
+    item.style.left = tool.pct + '%';
+    item.style.animation = 'labelIn 0.5s ' + (2.4 + i * 0.15) + 's ease-out forwards';
+    item.innerHTML =
+      '<div class="stem"></div>' +
+      '<div class="tool-name">' + tool.name + '</div>' +
+      '<div class="tool-type">' + tool.type + '</div>';
+    toolRow.appendChild(item);
+  });
 })();
 </script>
 </body>
