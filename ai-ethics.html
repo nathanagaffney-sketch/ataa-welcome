@@ -17,6 +17,25 @@
     font-family: 'Segoe UI', system-ui, sans-serif;
   }
 
+  /* ── Animated radial background ── */
+  .bg-radial {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 40% 45%, rgba(15, 30, 60, 0.8) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 65%, rgba(40, 25, 10, 0.4) 0%, transparent 55%);
+    animation: bgShift 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes bgShift {
+    0%   { background-position: 0% 0%, 100% 100%; }
+    33%  { background-position: 10% 5%, 85% 90%; }
+    66%  { background-position: -5% 10%, 110% 80%; }
+    100% { background-position: 5% -5%, 95% 105%; }
+  }
+
   .container {
     position: relative;
     width: 100vw;
@@ -44,8 +63,14 @@
     letter-spacing: 0.15em;
     text-align: center;
     margin-bottom: 0.3em;
+    text-shadow: 0 0 40px rgba(100,180,255,0.25), 0 0 80px rgba(100,180,255,0.08);
     opacity: 0;
-    animation: fadeInDown 0.8s ease-out 0.2s forwards;
+    animation: titleEntrance 1.2s ease-out 0.2s forwards;
+  }
+
+  @keyframes titleEntrance {
+    from { opacity: 0; transform: translateY(-0.8vw) scale(0.95); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0) scale(1.0); filter: blur(0); }
   }
 
   .subtitle {
@@ -54,6 +79,7 @@
     font-weight: 400;
     text-align: center;
     margin-bottom: 2.5em;
+    text-shadow: 0 0 20px rgba(212,175,55,0.12);
     opacity: 0;
     animation: fadeInDown 0.8s ease-out 0.5s forwards;
   }
@@ -69,7 +95,7 @@
   }
 
   .card {
-    background: rgba(26, 40, 64, 0.85);
+    background: rgba(26, 40, 64, 0.92);
     border-radius: 0.8vw;
     padding: 2vw 2.2vw;
     border: 1px solid rgba(212, 175, 55, 0.1);
@@ -79,6 +105,7 @@
     overflow: hidden;
   }
 
+  /* Gold top line — boosted */
   .card::before {
     content: '';
     position: absolute;
@@ -86,20 +113,76 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), transparent);
     opacity: 0;
     animation: cardTopGlow 3s ease-in-out infinite;
   }
 
-  .card:nth-child(1) { animation: cardReveal 0.7s ease-out 1.0s forwards; }
-  .card:nth-child(2) { animation: cardReveal 0.7s ease-out 1.3s forwards; }
-  .card:nth-child(3) { animation: cardReveal 0.7s ease-out 1.6s forwards; }
-  .card:nth-child(4) { animation: cardReveal 0.7s ease-out 1.9s forwards; }
+  /* Blue inner edge glow */
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0.8vw;
+    border: 1px solid transparent;
+    background: linear-gradient(180deg, rgba(100,180,255,0.08) 0%, transparent 40%, transparent 60%, rgba(100,180,255,0.04) 100%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    animation: cardEdgePulse 4s ease-in-out infinite;
+  }
+
+  /* Sequential breathing box-shadow */
+  .card:nth-child(1) {
+    animation: cardReveal 0.7s ease-out 1.0s forwards, cardBreath1 8s ease-in-out 2.5s infinite;
+  }
+  .card:nth-child(2) {
+    animation: cardReveal 0.7s ease-out 1.3s forwards, cardBreath2 8s ease-in-out 2.5s infinite;
+  }
+  .card:nth-child(3) {
+    animation: cardReveal 0.7s ease-out 1.6s forwards, cardBreath3 8s ease-in-out 2.5s infinite;
+  }
+  .card:nth-child(4) {
+    animation: cardReveal 0.7s ease-out 1.9s forwards, cardBreath4 8s ease-in-out 2.5s infinite;
+  }
 
   .card:nth-child(1)::before { animation-delay: 0s; }
   .card:nth-child(2)::before { animation-delay: 0.75s; }
   .card:nth-child(3)::before { animation-delay: 1.5s; }
   .card:nth-child(4)::before { animation-delay: 2.25s; }
+
+  .card:nth-child(1)::after { animation-delay: 0s; }
+  .card:nth-child(2)::after { animation-delay: 1s; }
+  .card:nth-child(3)::after { animation-delay: 2s; }
+  .card:nth-child(4)::after { animation-delay: 3s; }
+
+  @keyframes cardBreath1 {
+    0%, 100% { box-shadow: 0 0 0 rgba(100,180,255,0); }
+    12.5%    { box-shadow: 0 0 20px rgba(100,180,255,0.15), 0 0 40px rgba(100,180,255,0.05); }
+    25%      { box-shadow: 0 0 0 rgba(100,180,255,0); }
+  }
+  @keyframes cardBreath2 {
+    0%, 25% { box-shadow: 0 0 0 rgba(100,180,255,0); }
+    37.5%   { box-shadow: 0 0 20px rgba(100,180,255,0.15), 0 0 40px rgba(100,180,255,0.05); }
+    50%     { box-shadow: 0 0 0 rgba(100,180,255,0); }
+  }
+  @keyframes cardBreath3 {
+    0%, 50% { box-shadow: 0 0 0 rgba(100,180,255,0); }
+    62.5%   { box-shadow: 0 0 20px rgba(100,180,255,0.15), 0 0 40px rgba(100,180,255,0.05); }
+    75%     { box-shadow: 0 0 0 rgba(100,180,255,0); }
+  }
+  @keyframes cardBreath4 {
+    0%, 75% { box-shadow: 0 0 0 rgba(100,180,255,0); }
+    87.5%   { box-shadow: 0 0 20px rgba(100,180,255,0.15), 0 0 40px rgba(100,180,255,0.05); }
+    100%    { box-shadow: 0 0 0 rgba(100,180,255,0); }
+  }
+
+  @keyframes cardEdgePulse {
+    0%, 100% { opacity: 0.3; }
+    50%      { opacity: 0.8; }
+  }
 
   .card-category {
     color: #e8a317;
@@ -147,10 +230,10 @@
 
   @keyframes cardTopGlow {
     0%, 100% { opacity: 0; }
-    50%      { opacity: 1; }
+    50%      { opacity: 0.8; }
   }
 
-  /* ── Ambient layers ── */
+  /* ── Canvases ── */
   #particles {
     position: absolute;
     inset: 0;
@@ -160,10 +243,20 @@
     pointer-events: none;
   }
 
+  #energy {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  /* ── Shimmer overlays ── */
   .shimmer-overlay {
     position: absolute;
     inset: 0;
-    z-index: 6;
+    z-index: 7;
     pointer-events: none;
     background: linear-gradient(
       110deg,
@@ -180,7 +273,7 @@
   .shimmer-overlay-2 {
     position: absolute;
     inset: 0;
-    z-index: 6;
+    z-index: 7;
     pointer-events: none;
     background: linear-gradient(
       250deg,
@@ -194,6 +287,24 @@
     animation: shimmerSweep2 10s ease-in-out infinite 3s;
   }
 
+  /* Vertical shimmer — warm gold, cross-hatch effect */
+  .shimmer-overlay-3 {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    background: linear-gradient(
+      200deg,
+      transparent 0%, transparent 30%,
+      rgba(212, 175, 55, 0.04) 42%,
+      rgba(255, 220, 100, 0.07) 50%,
+      rgba(212, 175, 55, 0.04) 58%,
+      transparent 70%, transparent 100%
+    );
+    background-size: 100% 300%;
+    animation: shimmerVertical 12s ease-in-out infinite 1.5s;
+  }
+
   @keyframes shimmerSweep {
     0%   { background-position: 200% 0; }
     100% { background-position: -100% 0; }
@@ -202,11 +313,124 @@
     0%   { background-position: -100% 0; }
     100% { background-position: 250% 0; }
   }
+  @keyframes shimmerVertical {
+    0%   { background-position: 0 200%; }
+    100% { background-position: 0 -100%; }
+  }
+
+  /* ── CSS Glow divs ── */
+  .title-glow {
+    position: absolute;
+    top: 1%;
+    left: 20%;
+    width: 60%;
+    height: 15%;
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+    animation: titleGlowPulse 5s ease-in-out infinite;
+  }
+
+  @keyframes titleGlowPulse {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 1.0; }
+  }
+
+  .grid-glow {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 80%;
+    height: 65%;
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 30%;
+    background: radial-gradient(ellipse, rgba(100, 180, 255, 0.04) 0%, transparent 65%);
+    animation: gridGlowPulse 6s ease-in-out infinite;
+  }
+
+  @keyframes gridGlowPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1.0); }
+    50%      { opacity: 1.0; transform: scale(1.08); }
+  }
+
+  .nexus-glow {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    width: 20%;
+    height: 25%;
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(100, 180, 255, 0.1) 0%, rgba(100, 180, 255, 0.03) 40%, transparent 70%);
+    animation: nexusGlowPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes nexusGlowPulse {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1.0; }
+  }
+
+  .card-edge-glow {
+    position: absolute;
+    bottom: 8%;
+    left: 15%;
+    width: 70%;
+    height: 8%;
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+    animation: edgeFloat 7s ease-in-out infinite;
+  }
+
+  @keyframes edgeFloat {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50%      { opacity: 0.8; transform: translateY(-5px); }
+  }
+
+  .corner-glow-tl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 30%;
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 0 0 50% 0;
+    background: radial-gradient(ellipse at 0% 0%, rgba(100, 180, 255, 0.03) 0%, transparent 60%);
+    animation: cornerDriftTL 12s ease-in-out infinite;
+  }
+
+  @keyframes cornerDriftTL {
+    0%, 100% { opacity: 0.3; transform: translate(0, 0); }
+    50%      { opacity: 0.7; transform: translate(1%, 1%); }
+  }
+
+  .corner-glow-br {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    height: 30%;
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 50% 0 0 0;
+    background: radial-gradient(ellipse at 100% 100%, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
+    animation: cornerDriftBR 14s ease-in-out infinite 2s;
+  }
+
+  @keyframes cornerDriftBR {
+    0%, 100% { opacity: 0.3; transform: translate(0, 0); }
+    50%      { opacity: 0.6; transform: translate(-1%, -1%); }
+  }
 
   .vignette {
     position: absolute;
     inset: 0;
-    z-index: 7;
+    z-index: 9;
     pointer-events: none;
     background: radial-gradient(ellipse at center, transparent 50%, rgba(5, 8, 16, 0.45) 100%);
   }
@@ -215,6 +439,8 @@
 <body>
 
 <div class="container">
+  <div class="bg-radial"></div>
+
   <div class="content">
     <div class="title">THE AI REGULATORY FRAMEWORK</div>
     <div class="subtitle">The professional rules that govern AI use in legal practice</div>
@@ -246,50 +472,77 @@
   </div>
 
   <canvas id="particles"></canvas>
+  <canvas id="energy"></canvas>
   <div class="shimmer-overlay"></div>
   <div class="shimmer-overlay-2"></div>
+  <div class="shimmer-overlay-3"></div>
+
+  <div class="title-glow"></div>
+  <div class="grid-glow"></div>
+  <div class="nexus-glow"></div>
+  <div class="card-edge-glow"></div>
+  <div class="corner-glow-tl"></div>
+  <div class="corner-glow-br"></div>
+
   <div class="vignette"></div>
 </div>
 
 <script>
 (() => {
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
+  const pCanvas = document.getElementById('particles');
+  const pCtx = pCanvas.getContext('2d');
+  const eCanvas = document.getElementById('energy');
+  const eCtx = eCanvas.getContext('2d');
+
   let W, H;
 
   function resize() {
-    const rect = canvas.parentElement.getBoundingClientRect();
+    const rect = pCanvas.parentElement.getBoundingClientRect();
     W = rect.width;
     H = rect.height;
-    canvas.width = W * devicePixelRatio;
-    canvas.height = H * devicePixelRatio;
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    for (const c of [pCanvas, eCanvas]) {
+      c.width = W * devicePixelRatio;
+      c.height = H * devicePixelRatio;
+      c.style.width = W + 'px';
+      c.style.height = H + 'px';
+      c.getContext('2d').setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
   }
 
   window.addEventListener('resize', resize);
   resize();
 
-  const PARTICLE_COUNT = 80;
+  // ── PARTICLES — 150 count, blue + gold + white-hot sparks ──
+  const PARTICLE_COUNT = 150;
   const particles = [];
 
   function createParticle(init) {
+    const roll = Math.random();
+    const isWhiteHot = roll < 0.10;
+    const isBlue = !isWhiteHot && roll < 0.65;  // 55% blue
+    const isGold = !isWhiteHot && !isBlue;       // 35% gold
     const isBig = Math.random() < 0.12;
+
+    // Spawn weighted toward grid center
+    const cx = W * 0.5, cy = H * 0.55;
+    const spawnX = init ? Math.random() * W : (cx + (Math.random() - 0.5) * W * 0.7);
+    const spawnY = init ? Math.random() * H : (cy + (Math.random() - 0.5) * H * 0.6);
+
     return {
-      x: Math.random() * W,
-      y: init ? Math.random() * H : H + Math.random() * 40,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -(0.15 + Math.random() * 0.45),
-      r: isBig ? (2.5 + Math.random() * 2.5) : (0.8 + Math.random() * 1.8),
-      opacity: isBig ? (0.35 + Math.random() * 0.25) : (0.15 + Math.random() * 0.3),
-      hue: 35 + Math.random() * 20,
-      sat: 75 + Math.random() * 20,
-      lightness: isBig ? 75 : 65,
-      life: 0,
-      maxLife: 250 + Math.random() * 500,
-      twinkleSpeed: 0.02 + Math.random() * 0.04,
+      x: spawnX,
+      y: spawnY,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: -(0.1 + Math.random() * 0.55),
+      r: isWhiteHot ? (1 + Math.random() * 1.5) : (isBig ? (2.5 + Math.random() * 3) : (0.8 + Math.random() * 2)),
+      opacity: isWhiteHot ? (0.5 + Math.random() * 0.3) : (isBig ? (0.3 + Math.random() * 0.3) : (0.15 + Math.random() * 0.35)),
+      hue: isWhiteHot ? (200 + Math.random() * 40) : (isBlue ? (200 + Math.random() * 30) : (35 + Math.random() * 20)),
+      sat: isWhiteHot ? (10 + Math.random() * 20) : (isBlue ? (60 + Math.random() * 30) : (75 + Math.random() * 20)),
+      lightness: isWhiteHot ? (90 + Math.random() * 8) : (isBlue ? (70 + Math.random() * 15) : 65),
+      life: init ? Math.random() * 300 : 0,
+      maxLife: isWhiteHot ? (100 + Math.random() * 200) : (250 + Math.random() * 500),
+      twinkleSpeed: isWhiteHot ? (0.06 + Math.random() * 0.08) : (0.02 + Math.random() * 0.04),
       twinklePhase: Math.random() * Math.PI * 2,
+      isWhiteHot,
     };
   }
 
@@ -297,11 +550,122 @@
     particles.push(createParticle(true));
   }
 
-  let frame = 0;
+  function drawParticle(p, time) {
+    let alpha = p.opacity;
+    const fadeIn = 50, fadeOut = 70;
+    if (p.life < fadeIn) alpha *= p.life / fadeIn;
+    if (p.life > p.maxLife - fadeOut) alpha *= (p.maxLife - p.life) / fadeOut;
+    alpha *= 0.7 + 0.3 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
+    if (alpha <= 0.01) return;
+
+    // Core
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha})`;
+    pCtx.fill();
+
+    // Halo
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
+    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.18})`;
+    pCtx.fill();
+
+    // Outer bloom for big particles and white-hot
+    if (p.r > 3 || p.isWhiteHot) {
+      pCtx.beginPath();
+      pCtx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+      pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.06})`;
+      pCtx.fill();
+    }
+  }
+
+  // ── ENERGY STREAMS — dense network with 9 anchor points ──
+  let energyTime = 0;
+
+  // Card centers (approx grid positions), nexus, and 4 corner regulation nodes
+  const anchors = [
+    { x: 0.30, y: 0.42 },  // card 1 (top-left)
+    { x: 0.70, y: 0.42 },  // card 2 (top-right)
+    { x: 0.30, y: 0.75 },  // card 3 (bottom-left)
+    { x: 0.70, y: 0.75 },  // card 4 (bottom-right)
+    { x: 0.50, y: 0.58 },  // nexus center
+    { x: 0.08, y: 0.08 },  // corner TL
+    { x: 0.92, y: 0.08 },  // corner TR
+    { x: 0.08, y: 0.92 },  // corner BL
+    { x: 0.92, y: 0.92 },  // corner BR
+  ];
+
+  // Connections: cards to each other, cards to nexus, nexus to corners
+  const connections = [
+    // Card mesh
+    [0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3],
+    // Cards to nexus
+    [0, 4], [1, 4], [2, 4], [3, 4],
+    // Nexus to corners
+    [4, 5], [4, 6], [4, 7], [4, 8],
+  ];
+
+  function drawEnergyStreams(time) {
+    eCtx.clearRect(0, 0, W, H);
+    energyTime += 0.004;
+
+    for (let ci = 0; ci < connections.length; ci++) {
+      const [a, b] = connections[ci];
+      const ax = anchors[a].x * W;
+      const ay = anchors[a].y * H;
+      const bx = anchors[b].x * W;
+      const by = anchors[b].y * H;
+
+      // Pulsing line thickness
+      const thickness = 0.5 + 1.5 * (0.5 + 0.5 * Math.sin(energyTime * 2.5 + ci * 0.7));
+      const baseAlpha = 0.04 + 0.04 * Math.sin(energyTime * 2 + a + b);
+
+      // Control point with sine undulation
+      const mx = (ax + bx) / 2 + Math.sin(energyTime * 1.5 + a) * W * 0.03;
+      const my = (ay + by) / 2 + Math.cos(energyTime * 1.2 + b) * H * 0.03;
+
+      // Line color: gold flash on cross-connections (diagonal cards), blue-white otherwise
+      const isCross = (a <= 3 && b <= 3) && ((a === 0 && b === 3) || (a === 1 && b === 2));
+      const goldFlash = isCross && Math.sin(energyTime * 3 + ci) > 0.7;
+
+      const lineColor = goldFlash
+        ? `rgba(212, 175, 55, ${baseAlpha * 1.5})`
+        : `rgba(100, 180, 255, ${baseAlpha})`;
+
+      eCtx.beginPath();
+      eCtx.moveTo(ax, ay);
+      eCtx.quadraticCurveTo(mx, my, bx, by);
+      eCtx.strokeStyle = lineColor;
+      eCtx.lineWidth = thickness;
+      eCtx.stroke();
+
+      // Traveling light dot
+      const t = (Math.sin(energyTime * 1.5 + ci * 1.3) + 1) / 2;
+      const dotX = (1 - t) * (1 - t) * ax + 2 * (1 - t) * t * mx + t * t * bx;
+      const dotY = (1 - t) * (1 - t) * ay + 2 * (1 - t) * t * my + t * t * by;
+
+      const dotAlpha = baseAlpha * 4;
+      const dotColor = goldFlash ? '212, 175, 55' : '150, 200, 255';
+
+      eCtx.beginPath();
+      eCtx.arc(dotX, dotY, 2.5, 0, Math.PI * 2);
+      eCtx.fillStyle = `rgba(${dotColor}, ${dotAlpha})`;
+      eCtx.fill();
+
+      // Dot glow
+      eCtx.beginPath();
+      eCtx.arc(dotX, dotY, 8, 0, Math.PI * 2);
+      eCtx.fillStyle = `rgba(${dotColor}, ${dotAlpha * 0.3})`;
+      eCtx.fill();
+    }
+  }
+
+  // ── ANIMATION LOOP ──
+  let frameCount = 0;
 
   function animate() {
-    frame++;
-    ctx.clearRect(0, 0, W, H);
+    frameCount++;
+    pCtx.clearRect(0, 0, W, H);
 
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
@@ -309,31 +673,16 @@
       p.y += p.vy;
       p.life++;
       p.vx += (Math.random() - 0.5) * 0.02;
-      p.vx = Math.max(-0.5, Math.min(0.5, p.vx));
+      p.vx = Math.max(-0.7, Math.min(0.7, p.vx));
 
-      let alpha = p.opacity;
-      const fadeIn = 50, fadeOut = 70;
-      if (p.life < fadeIn) alpha *= p.life / fadeIn;
-      if (p.life > p.maxLife - fadeOut) alpha *= (p.maxLife - p.life) / fadeOut;
-      alpha *= 0.7 + 0.3 * Math.sin(frame * p.twinkleSpeed + p.twinklePhase);
-
-      if (alpha > 0.01) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha})`;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.15})`;
-        ctx.fill();
-      }
+      drawParticle(p, frameCount);
 
       if (p.life >= p.maxLife || p.y < -30 || p.x < -30 || p.x > W + 30) {
         particles[i] = createParticle(false);
       }
     }
 
+    drawEnergyStreams(frameCount);
     requestAnimationFrame(animate);
   }
 
