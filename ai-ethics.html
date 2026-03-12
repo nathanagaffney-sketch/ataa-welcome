@@ -8,13 +8,13 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #0a0e1a;
+    background: #1a1a2e;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: Calibri, 'Segoe UI', sans-serif;
   }
 
   /* ── Animated radial background ── */
@@ -24,9 +24,9 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 60% 80% at -5% 50%, rgba(160, 120, 40, 0.6) 0%, rgba(100, 75, 20, 0.3) 40%, transparent 70%),
-      radial-gradient(ellipse at 50% 50%, rgba(20, 35, 60, 0.4) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 70% at 105% 60%, rgba(80, 60, 20, 0.25) 0%, transparent 60%);
+      radial-gradient(ellipse 60% 80% at -5% 50%, rgba(212, 165, 116, 0.35) 0%, rgba(212, 165, 116, 0.15) 40%, transparent 70%),
+      radial-gradient(ellipse at 50% 50%, rgba(26, 26, 46, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 105% 60%, rgba(212, 165, 116, 0.10) 0%, transparent 60%);
     animation: bgShift 30s ease-in-out infinite alternate;
   }
 
@@ -42,7 +42,7 @@
     height: 56.25vw;
     max-height: 100vh;
     max-width: 177.78vh;
-    background: linear-gradient(110deg, #2a2010 0%, #1e1a0f 12%, #151820 35%, #0f1923 65%, #131d2c 100%);
+    background: #1a1a2e;
   }
 
   /* ── Content layer ── */
@@ -57,8 +57,9 @@
   }
 
   .title {
-    color: #ffffff;
-    font-size: 3.8vw;
+    color: #f0ece2;
+    font-family: Candara, Calibri, sans-serif;
+    font-size: 3.5vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-align: center;
@@ -74,13 +75,13 @@
   }
 
   .subtitle {
-    color: #c4aa78;
+    color: #d4a574;
     font-size: 1.5vw;
     font-weight: 400;
     font-style: italic;
     text-align: center;
     margin-bottom: 0.8em;
-    text-shadow: 0 0 20px rgba(212,175,55,0.12);
+    text-shadow: 0 0 20px rgba(212,165,116,0.12);
     opacity: 0;
     animation: fadeInDown 0.8s ease-out 0.5s forwards;
   }
@@ -89,34 +90,43 @@
   .card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1vw;
+    gap: 0.4vw;
     width: 94%;
     max-width: 94%;
     flex: 1;
   }
 
   .card {
-    background: rgba(22, 36, 58, 0.88);
+    background: rgba(34, 34, 66, 0.70);
     border-radius: 0.6vw;
-    padding: 1.8vw 2vw;
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 1.2vw 1.8vw 1.2vw 2.2vw;
+    border: 1px solid rgba(34, 34, 66, 0.3);
     opacity: 0;
     transform: translateY(1.5vw);
     position: relative;
     overflow: hidden;
   }
 
-  /* Gold top line — boosted */
+  /* Left accent bar */
   .card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), transparent);
+    bottom: 0;
+    width: 0.4vw;
+    border-radius: 0.6vw 0 0 0.6vw;
     opacity: 0;
-    animation: cardTopGlow 3s ease-in-out infinite;
+    animation: cardBarReveal 0.5s ease-out forwards;
+  }
+  .card:nth-child(1)::before,
+  .card:nth-child(2)::before { background: #8faa6b; animation-delay: 1.0s; }
+  .card:nth-child(3)::before,
+  .card:nth-child(4)::before { background: #d4a574; animation-delay: 1.6s; }
+
+  @keyframes cardBarReveal {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   /* Blue inner edge glow */
@@ -149,10 +159,7 @@
     animation: cardReveal 0.7s ease-out 1.9s forwards, cardBreath4 8s ease-in-out 2.5s infinite;
   }
 
-  .card:nth-child(1)::before { animation-delay: 0s; }
-  .card:nth-child(2)::before { animation-delay: 0.75s; }
-  .card:nth-child(3)::before { animation-delay: 1.5s; }
-  .card:nth-child(4)::before { animation-delay: 2.25s; }
+  /* (bar reveal delays set above) */
 
   .card:nth-child(1)::after { animation-delay: 0s; }
   .card:nth-child(2)::after { animation-delay: 1s; }
@@ -186,30 +193,36 @@
   }
 
   .card-category {
-    color: #e8a317;
-    font-size: 1.1vw;
-    font-weight: 700;
+    font-size: 1.0vw;
+    font-weight: 400;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.2em;
+    font-family: Calibri, 'Segoe UI', sans-serif;
   }
+  .card:nth-child(1) .card-category,
+  .card:nth-child(2) .card-category { color: #8faa6b; }
+  .card:nth-child(3) .card-category,
+  .card:nth-child(4) .card-category { color: #d4a574; }
 
   .card-rule {
-    color: #ffffff;
-    font-size: 3.5vw;
+    color: #f0ece2;
+    font-family: Candara, Calibri, sans-serif;
+    font-size: 1.8vw;
     font-weight: 700;
-    margin-bottom: 0.25em;
+    margin-bottom: 0.2em;
     line-height: 1.1;
   }
 
   .card-desc {
-    color: #99aabb;
-    font-size: 1.2vw;
+    color: #f0ece2;
+    font-size: 1.3vw;
     line-height: 1.45;
+    font-family: Calibri, 'Segoe UI', sans-serif;
   }
 
   .footer {
-    color: #667788;
+    color: #d4a574;
     font-size: 1.0vw;
     font-style: italic;
     text-align: center;
@@ -229,10 +242,7 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes cardTopGlow {
-    0%, 100% { opacity: 0; }
-    50%      { opacity: 0.8; }
-  }
+  /* (cardTopGlow removed — replaced by left accent bar) */
 
   /* ── Canvases ── */
   #particles {
@@ -433,7 +443,7 @@
     inset: 0;
     z-index: 9;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 50%, rgba(5, 8, 16, 0.45) 100%);
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(10, 10, 20, 0.45) 100%);
   }
 </style>
 </head>
@@ -443,33 +453,33 @@
   <div class="bg-radial"></div>
 
   <div class="content">
-    <div class="title">THE AI REGULATORY FRAMEWORK</div>
-    <div class="subtitle">The professional rules that govern AI use in legal practice</div>
+    <div class="title">The Regulatory Framework</div>
+    <div class="subtitle">These rules apply to every AI-generated visual</div>
 
     <div class="card-grid">
       <div class="card">
         <div class="card-category">Competence</div>
         <div class="card-rule">Rule 1.1</div>
-        <div class="card-desc">Lawyers must understand the technology they use and the risks associated with it.</div>
+        <div class="card-desc">Understanding the technology and its risks</div>
       </div>
       <div class="card">
         <div class="card-category">Confidentiality</div>
         <div class="card-rule">Rule 1.6</div>
-        <div class="card-desc">Lawyers must prevent confidential client information from being disclosed to AI systems.</div>
+        <div class="card-desc">Preventing data leakage to AI platforms</div>
       </div>
       <div class="card">
-        <div class="card-category">Candor to the Tribunal</div>
+        <div class="card-category">Candor</div>
         <div class="card-rule">Rule 3.3</div>
-        <div class="card-desc">Lawyers remain responsible for the accuracy of all filings — including AI-generated content.</div>
+        <div class="card-desc">No false statements to tribunal — including AI-generated ones</div>
       </div>
       <div class="card">
         <div class="card-category">Supervision</div>
         <div class="card-rule">Rules 5.1 & 5.3</div>
-        <div class="card-desc">Lawyers are responsible for supervising associates and staff using AI tools.</div>
+        <div class="card-desc">Liability for associates and paralegals using these tools</div>
       </div>
     </div>
 
-    <div class="footer">ABA Formal Opinion 512 discusses the application of these rules to generative AI.</div>
+    <div class="footer">These rules are discussed in ABA Formal Op. 512.</div>
   </div>
 
   <canvas id="particles"></canvas>
@@ -536,7 +546,7 @@
       vy: -(0.1 + Math.random() * 0.55),
       r: isWhiteHot ? (1 + Math.random() * 1.5) : (isBig ? (2.5 + Math.random() * 3) : (0.8 + Math.random() * 2)),
       opacity: isWhiteHot ? (0.5 + Math.random() * 0.3) : (isBig ? (0.3 + Math.random() * 0.3) : (0.15 + Math.random() * 0.35)),
-      hue: isWhiteHot ? (200 + Math.random() * 40) : (isBlue ? (200 + Math.random() * 30) : (35 + Math.random() * 20)),
+      hue: isWhiteHot ? (200 + Math.random() * 40) : (isBlue ? (200 + Math.random() * 30) : (28 + Math.random() * 7)),
       sat: isWhiteHot ? (10 + Math.random() * 20) : (isBlue ? (60 + Math.random() * 30) : (75 + Math.random() * 20)),
       lightness: isWhiteHot ? (90 + Math.random() * 8) : (isBlue ? (70 + Math.random() * 15) : 65),
       life: init ? Math.random() * 300 : 0,
