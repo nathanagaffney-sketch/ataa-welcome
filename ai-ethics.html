@@ -24,9 +24,9 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse at 15% 50%, rgba(80, 60, 20, 0.35) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(15, 30, 60, 0.6) 0%, transparent 65%),
-      radial-gradient(ellipse at 85% 60%, rgba(40, 25, 10, 0.25) 0%, transparent 50%);
+      radial-gradient(ellipse at 0% 50%, rgba(120, 90, 30, 0.45) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(15, 30, 60, 0.5) 0%, transparent 65%),
+      radial-gradient(ellipse at 100% 70%, rgba(60, 45, 15, 0.2) 0%, transparent 45%);
     animation: bgShift 30s ease-in-out infinite alternate;
   }
 
@@ -43,7 +43,7 @@
     height: 56.25vw;
     max-height: 100vh;
     max-width: 177.78vh;
-    background: linear-gradient(135deg, #1a1810 0%, #13161e 30%, #0f1923 60%, #141e2e 100%);
+    background: linear-gradient(120deg, #1e1a0e 0%, #171610 15%, #111620 40%, #0f1923 70%, #141e2e 100%);
   }
 
   /* ── Content layer ── */
@@ -54,16 +54,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3% 5%;
+    padding: 2.5% 4%;
   }
 
   .title {
     color: #ffffff;
-    font-size: 2.8vw;
+    font-size: 3.6vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-align: center;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.15em;
     text-shadow: 0 0 40px rgba(100,180,255,0.25), 0 0 80px rgba(100,180,255,0.08);
     opacity: 0;
     animation: titleEntrance 1.2s ease-out 0.2s forwards;
@@ -76,11 +76,11 @@
 
   .subtitle {
     color: #c4aa78;
-    font-size: 1.3vw;
+    font-size: 1.4vw;
     font-weight: 400;
     font-style: italic;
     text-align: center;
-    margin-bottom: 2.5em;
+    margin-bottom: 1.2em;
     text-shadow: 0 0 20px rgba(212,175,55,0.12);
     opacity: 0;
     animation: fadeInDown 0.8s ease-out 0.5s forwards;
@@ -90,9 +90,9 @@
   .card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2vw;
-    width: 90%;
-    max-width: 90%;
+    gap: 1.2vw;
+    width: 92%;
+    max-width: 92%;
     flex: 1;
   }
 
@@ -100,7 +100,7 @@
     background: rgba(26, 40, 64, 0.85);
     border-radius: 0.8vw;
     padding: 2vw 2.2vw;
-    border: 1px solid rgba(212, 175, 55, 0.18);
+    border: 1px solid rgba(212, 175, 55, 0.25);
     opacity: 0;
     transform: translateY(1.5vw);
     position: relative;
@@ -188,7 +188,7 @@
 
   .card-category {
     color: #e8a317;
-    font-size: 0.9vw;
+    font-size: 1.0vw;
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -197,7 +197,7 @@
 
   .card-rule {
     color: #ffffff;
-    font-size: 2.8vw;
+    font-size: 3.2vw;
     font-weight: 700;
     margin-bottom: 0.4em;
     line-height: 1.1;
@@ -205,7 +205,7 @@
 
   .card-desc {
     color: #8899aa;
-    font-size: 1.05vw;
+    font-size: 1.15vw;
     line-height: 1.5;
   }
 
@@ -214,7 +214,7 @@
     font-size: 0.9vw;
     font-style: italic;
     text-align: center;
-    padding-top: 1.5em;
+    padding-top: 0.8em;
     opacity: 0;
     animation: fadeInDown 0.6s ease-out 2.4s forwards;
   }
