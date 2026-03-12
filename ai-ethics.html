@@ -24,17 +24,16 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse at 0% 50%, rgba(120, 90, 30, 0.45) 0%, transparent 45%),
-      radial-gradient(ellipse at 50% 50%, rgba(15, 30, 60, 0.5) 0%, transparent 65%),
-      radial-gradient(ellipse at 100% 70%, rgba(60, 45, 15, 0.2) 0%, transparent 45%);
+      radial-gradient(ellipse 60% 80% at -5% 50%, rgba(160, 120, 40, 0.6) 0%, rgba(100, 75, 20, 0.3) 40%, transparent 70%),
+      radial-gradient(ellipse at 50% 50%, rgba(20, 35, 60, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 105% 60%, rgba(80, 60, 20, 0.25) 0%, transparent 60%);
     animation: bgShift 30s ease-in-out infinite alternate;
   }
 
   @keyframes bgShift {
-    0%   { background-position: 0% 0%, 100% 100%; }
-    33%  { background-position: 10% 5%, 85% 90%; }
-    66%  { background-position: -5% 10%, 110% 80%; }
-    100% { background-position: 5% -5%, 95% 105%; }
+    0%   { background-position: 0% 0%, 50% 50%, 100% 60%; }
+    50%  { background-position: 2% 5%, 50% 50%, 97% 55%; }
+    100% { background-position: -2% -3%, 50% 50%, 103% 65%; }
   }
 
   .container {
@@ -43,7 +42,7 @@
     height: 56.25vw;
     max-height: 100vh;
     max-width: 177.78vh;
-    background: linear-gradient(120deg, #1e1a0e 0%, #171610 15%, #111620 40%, #0f1923 70%, #141e2e 100%);
+    background: linear-gradient(110deg, #2a2010 0%, #1e1a0f 12%, #151820 35%, #0f1923 65%, #131d2c 100%);
   }
 
   /* ── Content layer ── */
@@ -54,16 +53,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2.5% 4%;
+    padding: 2% 3.5%;
   }
 
   .title {
     color: #ffffff;
-    font-size: 3.6vw;
+    font-size: 3.8vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-align: center;
-    margin-bottom: 0.15em;
+    margin-bottom: 0.1em;
     text-shadow: 0 0 40px rgba(100,180,255,0.25), 0 0 80px rgba(100,180,255,0.08);
     opacity: 0;
     animation: titleEntrance 1.2s ease-out 0.2s forwards;
@@ -76,11 +75,11 @@
 
   .subtitle {
     color: #c4aa78;
-    font-size: 1.4vw;
+    font-size: 1.5vw;
     font-weight: 400;
     font-style: italic;
     text-align: center;
-    margin-bottom: 1.2em;
+    margin-bottom: 0.8em;
     text-shadow: 0 0 20px rgba(212,175,55,0.12);
     opacity: 0;
     animation: fadeInDown 0.8s ease-out 0.5s forwards;
@@ -90,16 +89,16 @@
   .card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.2vw;
-    width: 92%;
-    max-width: 92%;
+    gap: 1vw;
+    width: 94%;
+    max-width: 94%;
     flex: 1;
   }
 
   .card {
-    background: rgba(26, 40, 64, 0.85);
-    border-radius: 0.8vw;
-    padding: 2vw 2.2vw;
+    background: rgba(22, 36, 58, 0.88);
+    border-radius: 0.6vw;
+    padding: 1.8vw 2vw;
     border: 1px solid rgba(212, 175, 55, 0.25);
     opacity: 0;
     transform: translateY(1.5vw);
@@ -188,33 +187,33 @@
 
   .card-category {
     color: #e8a317;
-    font-size: 1.0vw;
+    font-size: 1.1vw;
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.3em;
   }
 
   .card-rule {
     color: #ffffff;
-    font-size: 3.2vw;
+    font-size: 3.5vw;
     font-weight: 700;
-    margin-bottom: 0.4em;
+    margin-bottom: 0.25em;
     line-height: 1.1;
   }
 
   .card-desc {
-    color: #8899aa;
-    font-size: 1.15vw;
-    line-height: 1.5;
+    color: #99aabb;
+    font-size: 1.2vw;
+    line-height: 1.45;
   }
 
   .footer {
-    color: #556677;
-    font-size: 0.9vw;
+    color: #667788;
+    font-size: 1.0vw;
     font-style: italic;
     text-align: center;
-    padding-top: 0.8em;
+    padding-top: 0.5em;
     opacity: 0;
     animation: fadeInDown 0.6s ease-out 2.4s forwards;
   }
