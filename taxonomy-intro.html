@@ -8,13 +8,13 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #1a1a2e;
+    background: #0a0a0a;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    font-family: Calibri, 'Segoe UI', sans-serif;
+    font-family: system-ui, sans-serif;
   }
 
   .container {
@@ -23,10 +23,8 @@
     height: 56.25vw; /* 16:9 */
     max-height: 100vh;
     max-width: 177.78vh;
-    background: #1a1a2e;
   }
 
-  /* ── Art background ── */
   .slide-bg {
     position: absolute;
     inset: 0;
@@ -36,215 +34,13 @@
     z-index: 1;
   }
 
-  /* Dark overlay for text readability */
-  .bg-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.50);
-  }
-
-  /* ── Content layer ── */
-  .content {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    padding: 2.5% 4% 2% 4%;
-  }
-
-  /* Section label */
-  .section-label {
-    color: #8faa6b;
-    font-size: min(1.1vw, 1.96vh);
-    font-weight: 600;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    margin-bottom: 0.4em;
-    opacity: 0;
-    animation: fadeInDown 0.6s ease-out 0.2s forwards;
-  }
-
-  .title {
-    color: #f0ece2;
-    font-family: Candara, Calibri, sans-serif;
-    font-size: min(3.1vw, 5.51vh);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 0.15em;
-    text-shadow: 0 0 40px rgba(143, 170, 107, 0.20), 0 0 80px rgba(143, 170, 107, 0.06);
-    opacity: 0;
-    animation: titleEntrance 1.0s ease-out 0.3s forwards;
-  }
-
-  @keyframes titleEntrance {
-    from { opacity: 0; transform: translateY(-0.5vw) scale(0.97); filter: blur(3px); }
-    to   { opacity: 1; transform: translateY(0) scale(1.0); filter: blur(0); }
-  }
-
-  .subtitle {
-    color: #d4a574;
-    font-size: min(1.6vw, 2.84vh);
-    font-weight: 400;
-    font-style: italic;
-    margin-bottom: 0.6em;
-    text-shadow: 0 0 20px rgba(212, 165, 116, 0.10);
-    opacity: 0;
-    animation: fadeInDown 0.7s ease-out 0.6s forwards;
-  }
-
-  .body-text {
-    color: #f0ece2;
-    font-size: min(1.4vw, 2.49vh);
-    line-height: 1.5;
-    max-width: 85%;
-    margin-bottom: 1.2em;
-    opacity: 0;
-    animation: fadeInDown 0.7s ease-out 0.9s forwards;
-  }
-
-  /* ── Three category cards ── */
-  .card-row {
-    display: flex;
-    gap: 1.8%;
-    width: 100%;
-    flex: 1;
-    align-items: stretch;
-  }
-
-  .card {
-    flex: 1;
-    background: rgba(34, 34, 66, 0.82);
-    border-radius: 0.5vw;
-    padding: 1.4vw 1.6vw 1.2vw;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(2vw);
-    backdrop-filter: blur(8px);
-  }
-
-  /* Top accent bar */
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0.25vw;
-    opacity: 0;
-    animation: barReveal 0.5s ease-out forwards;
-  }
-
-  .card:nth-child(1)::before { background: #8faa6b; animation-delay: 1.4s; }
-  .card:nth-child(2)::before { background: #d4a574; animation-delay: 1.7s; }
-  .card:nth-child(3)::before { background: #b06060; animation-delay: 2.0s; }
-
-  @keyframes barReveal {
-    from { opacity: 0; transform: scaleX(0); }
-    to   { opacity: 1; transform: scaleX(1); }
-  }
-
-  /* Inner edge glow */
-  .card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 0.5vw;
-    border: 1px solid transparent;
-    pointer-events: none;
-    opacity: 0;
-  }
-
-  .card:nth-child(1)::after {
-    background: linear-gradient(180deg, rgba(143, 170, 107, 0.10) 0%, transparent 40%, transparent 60%, rgba(143, 170, 107, 0.05) 100%) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
-    animation: cardEdgePulse 5s ease-in-out infinite 0s;
-  }
-  .card:nth-child(2)::after {
-    background: linear-gradient(180deg, rgba(212, 165, 116, 0.10) 0%, transparent 40%, transparent 60%, rgba(212, 165, 116, 0.05) 100%) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
-    animation: cardEdgePulse 5s ease-in-out infinite 1.6s;
-  }
-  .card:nth-child(3)::after {
-    background: linear-gradient(180deg, rgba(176, 96, 96, 0.10) 0%, transparent 40%, transparent 60%, rgba(176, 96, 96, 0.05) 100%) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
-    animation: cardEdgePulse 5s ease-in-out infinite 3.2s;
-  }
-
-  /* Staggered card entrance */
-  .card:nth-child(1) {
-    animation: cardReveal 0.8s ease-out 1.2s forwards, cardBreath1 8s ease-in-out 2.5s infinite;
-  }
-  .card:nth-child(2) {
-    animation: cardReveal 0.8s ease-out 1.5s forwards, cardBreath2 8s ease-in-out 2.5s infinite;
-  }
-  .card:nth-child(3) {
-    animation: cardReveal 0.8s ease-out 1.8s forwards, cardBreath3 8s ease-in-out 2.5s infinite;
-  }
-
-  /* Sequential breathing glow per card color */
-  @keyframes cardBreath1 {
-    0%, 100% { box-shadow: 0 0 0 rgba(143, 170, 107, 0); }
-    16%      { box-shadow: 0 0 25px rgba(143, 170, 107, 0.12), 0 0 50px rgba(143, 170, 107, 0.04); }
-    33%      { box-shadow: 0 0 0 rgba(143, 170, 107, 0); }
-  }
-  @keyframes cardBreath2 {
-    0%, 33% { box-shadow: 0 0 0 rgba(212, 165, 116, 0); }
-    50%     { box-shadow: 0 0 25px rgba(212, 165, 116, 0.12), 0 0 50px rgba(212, 165, 116, 0.04); }
-    66%     { box-shadow: 0 0 0 rgba(212, 165, 116, 0); }
-  }
-  @keyframes cardBreath3 {
-    0%, 66% { box-shadow: 0 0 0 rgba(176, 96, 96, 0); }
-    83%     { box-shadow: 0 0 25px rgba(176, 96, 96, 0.12), 0 0 50px rgba(176, 96, 96, 0.04); }
-    100%    { box-shadow: 0 0 0 rgba(176, 96, 96, 0); }
-  }
-
-  @keyframes cardEdgePulse {
-    0%, 100% { opacity: 0.2; }
-    50%      { opacity: 0.7; }
-  }
-
-  .card-label {
-    font-size: min(1.0vw, 1.78vh);
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 0.6em;
-    margin-top: 0.5em;
-  }
-  .card:nth-child(1) .card-label { color: #8faa6b; }
-  .card:nth-child(2) .card-label { color: #d4a574; }
-  .card:nth-child(3) .card-label { color: #b06060; }
-
-  .card-desc {
-    color: #f0ece2;
-    font-size: min(1.25vw, 2.22vh);
-    line-height: 1.45;
-  }
-
-  /* ── Keyframes ── */
-  @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-0.6vw); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes cardReveal {
-    from { opacity: 0; transform: translateY(2vw); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
   /* ── Canvases ── */
   #particles {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 5;
+    z-index: 2;
     pointer-events: none;
   }
 
@@ -253,22 +49,22 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 6;
+    z-index: 3;
     pointer-events: none;
   }
 
-  /* ── Shimmer overlays ── */
+  /* ── Shimmer sweeps ── */
   .shimmer-overlay {
     position: absolute;
     inset: 0;
-    z-index: 7;
+    z-index: 4;
     pointer-events: none;
     background: linear-gradient(
       110deg,
       transparent 0%, transparent 35%,
-      rgba(143, 170, 107, 0.05) 42%,
-      rgba(143, 170, 107, 0.09) 50%,
-      rgba(143, 170, 107, 0.05) 58%,
+      rgba(143, 170, 107, 0.06) 42%,
+      rgba(143, 170, 107, 0.10) 50%,
+      rgba(143, 170, 107, 0.06) 58%,
       transparent 65%, transparent 100%
     );
     background-size: 300% 100%;
@@ -278,13 +74,13 @@
   .shimmer-overlay-2 {
     position: absolute;
     inset: 0;
-    z-index: 7;
+    z-index: 4;
     pointer-events: none;
     background: linear-gradient(
       250deg,
       transparent 0%, transparent 30%,
       rgba(212, 165, 116, 0.04) 45%,
-      rgba(212, 165, 116, 0.07) 50%,
+      rgba(212, 165, 116, 0.08) 50%,
       rgba(212, 165, 116, 0.04) 55%,
       transparent 70%, transparent 100%
     );
@@ -295,14 +91,14 @@
   .shimmer-overlay-3 {
     position: absolute;
     inset: 0;
-    z-index: 7;
+    z-index: 4;
     pointer-events: none;
     background: linear-gradient(
       200deg,
       transparent 0%, transparent 30%,
-      rgba(176, 96, 96, 0.03) 42%,
-      rgba(176, 96, 96, 0.06) 50%,
-      rgba(176, 96, 96, 0.03) 58%,
+      rgba(176, 96, 96, 0.04) 42%,
+      rgba(176, 96, 96, 0.07) 50%,
+      rgba(176, 96, 96, 0.04) 58%,
       transparent 70%, transparent 100%
     );
     background-size: 100% 300%;
@@ -322,62 +118,118 @@
     100% { background-position: 0 -100%; }
   }
 
-  /* ── Glow zones — one per card column ── */
+  /* ── Zone glows — pulse over each spotlight area ── */
   .zone-glow-green {
     position: absolute;
-    top: 45%;
-    left: 4%;
+    top: 25%;
+    left: 2%;
     width: 30%;
-    height: 50%;
-    z-index: 4;
+    height: 65%;
+    z-index: 5;
     pointer-events: none;
     border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(143, 170, 107, 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(143, 170, 107, 0.10) 0%, transparent 70%);
     animation: zonePulse 5s ease-in-out infinite;
   }
 
   .zone-glow-amber {
     position: absolute;
-    top: 43%;
+    top: 22%;
     left: 35%;
     width: 30%;
-    height: 50%;
-    z-index: 4;
+    height: 65%;
+    z-index: 5;
     pointer-events: none;
     border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(212, 165, 116, 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(212, 165, 116, 0.10) 0%, transparent 70%);
     animation: zonePulse 5.5s ease-in-out infinite 1.8s;
   }
 
   .zone-glow-red {
     position: absolute;
-    top: 45%;
-    right: 4%;
+    top: 25%;
+    right: 2%;
     width: 30%;
-    height: 50%;
-    z-index: 4;
+    height: 65%;
+    z-index: 5;
     pointer-events: none;
     border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(176, 96, 96, 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(176, 96, 96, 0.10) 0%, transparent 70%);
     animation: zonePulse 4.5s ease-in-out infinite 3.5s;
   }
 
   @keyframes zonePulse {
     0%, 100% { opacity: 0.3; transform: scale(1); }
-    50%      { opacity: 1; transform: scale(1.05); }
+    50%      { opacity: 1; transform: scale(1.06); }
   }
 
-  /* ── Corner and title glows ── */
+  /* ── Volumetric beam flicker — three vertical beams ── */
+  .beam-flicker-green {
+    position: absolute;
+    top: 0;
+    left: 8%;
+    width: 18%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(143, 170, 107, 0.06) 0%,
+      rgba(143, 170, 107, 0.03) 40%,
+      transparent 80%
+    );
+    animation: beamFlicker 3s ease-in-out infinite;
+  }
+
+  .beam-flicker-amber {
+    position: absolute;
+    top: 0;
+    left: 40%;
+    width: 20%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(212, 165, 116, 0.06) 0%,
+      rgba(212, 165, 116, 0.03) 40%,
+      transparent 80%
+    );
+    animation: beamFlicker 3.5s ease-in-out infinite 1s;
+  }
+
+  .beam-flicker-red {
+    position: absolute;
+    top: 0;
+    right: 8%;
+    width: 18%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(176, 96, 96, 0.06) 0%,
+      rgba(176, 96, 96, 0.03) 40%,
+      transparent 80%
+    );
+    animation: beamFlicker 2.8s ease-in-out infinite 2s;
+  }
+
+  @keyframes beamFlicker {
+    0%, 100% { opacity: 0.4; }
+    25%      { opacity: 0.9; }
+    50%      { opacity: 0.5; }
+    75%      { opacity: 1.0; }
+  }
+
+  /* ── Title glow ── */
   .title-glow {
     position: absolute;
     top: 0;
     left: 15%;
     width: 70%;
     height: 18%;
-    z-index: 8;
+    z-index: 5;
     pointer-events: none;
     border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(143, 170, 107, 0.05) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(240, 236, 226, 0.04) 0%, transparent 70%);
     animation: titleGlowPulse 6s ease-in-out infinite;
   }
 
@@ -386,69 +238,20 @@
     50%      { opacity: 1.0; }
   }
 
-  .corner-glow-tl {
-    position: absolute;
-    top: 0; left: 0;
-    width: 25%; height: 25%;
-    z-index: 3;
-    pointer-events: none;
-    border-radius: 0 0 50% 0;
-    background: radial-gradient(ellipse at 0% 0%, rgba(143, 170, 107, 0.04) 0%, transparent 60%);
-    animation: cornerDrift 12s ease-in-out infinite;
-  }
-
-  .corner-glow-br {
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 25%; height: 25%;
-    z-index: 3;
-    pointer-events: none;
-    border-radius: 50% 0 0 0;
-    background: radial-gradient(ellipse at 100% 100%, rgba(176, 96, 96, 0.04) 0%, transparent 60%);
-    animation: cornerDrift 14s ease-in-out infinite 2s;
-  }
-
-  @keyframes cornerDrift {
-    0%, 100% { opacity: 0.3; transform: translate(0, 0); }
-    50%      { opacity: 0.7; transform: translate(1%, 1%); }
-  }
-
+  /* ── Vignette ── */
   .vignette {
     position: absolute;
     inset: 0;
-    z-index: 9;
+    z-index: 8;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 45%, rgba(10, 10, 20, 0.50) 100%);
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(5, 5, 10, 0.50) 100%);
   }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <img class="slide-bg" src="https://nathanagaffney-sketch.github.io/ataa-welcome/taxonomy-desk.png" alt="Exhibit Taxonomy">
-  <div class="bg-overlay"></div>
-
-  <div class="content">
-    <div class="section-label">Exhibit Taxonomy</div>
-    <div class="title">What Can Be Reliably Made with AI in March 2026</div>
-    <div class="subtitle">Matching exhibit types to the right tools</div>
-    <div class="body-text">Not all exhibits are created equal. Some a solo attorney can reliably generate with AI today. Others require domain expertise you don't have &mdash; and no amount of prompting fixes that. The difference comes down to whether <strong style="color:#d4a574">YOU</strong> can verify the output.</div>
-
-    <div class="card-row">
-      <div class="card">
-        <div class="card-label">High Reliability</div>
-        <div class="card-desc">Checklists, timelines, comparison charts &mdash; verifiable and defensible</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Medium Reliability</div>
-        <div class="card-desc">Infographics, annotated photos, org charts &mdash; AI builds the layout, you verify every detail</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Proceed with Caution</div>
-        <div class="card-desc">Scene reconstruction, medical visuals &mdash; requires domain expertise you don't have</div>
-      </div>
-    </div>
-  </div>
+  <img class="slide-bg" src="https://nathanagaffney-sketch.github.io/ataa-welcome/taxonomy-beacons.png" alt="Exhibit Taxonomy">
 
   <canvas id="particles"></canvas>
   <canvas id="energy"></canvas>
@@ -461,9 +264,11 @@
   <div class="zone-glow-amber"></div>
   <div class="zone-glow-red"></div>
 
+  <div class="beam-flicker-green"></div>
+  <div class="beam-flicker-amber"></div>
+  <div class="beam-flicker-red"></div>
+
   <div class="title-glow"></div>
-  <div class="corner-glow-tl"></div>
-  <div class="corner-glow-br"></div>
 
   <div class="vignette"></div>
 </div>
@@ -493,38 +298,37 @@
   window.addEventListener('resize', resize);
   resize();
 
-  // ── PARTICLES — warm museum dust motes + color-coded sparks ──
-  const PARTICLE_COUNT = 80;
+  // ── PARTICLES — color-coded motes weighted by zone position ──
+  const PARTICLE_COUNT = 90;
   const particles = [];
 
-  const PALETTE = [
-    { h: 90,  s: 35, l: 65, w: 3 },   // green (high reliability)
-    { h: 30,  s: 55, l: 70, w: 3 },   // amber (medium)
-    { h: 0,   s: 45, l: 62, w: 2 },   // red (caution)
-    { h: 38,  s: 60, l: 72, w: 2 },   // warm gold
-    { h: 210, s: 20, l: 85, w: 1 },   // cool white
+  // Zone centers (x as fraction of width)
+  const ZONES = [
+    { cx: 0.17, color: [143, 170, 107], weight: 3 },  // green
+    { cx: 0.50, color: [212, 165, 116], weight: 3 },  // amber
+    { cx: 0.83, color: [176, 96, 96],   weight: 2 },  // red
   ];
 
-  function weightedPalette() {
-    const total = PALETTE.reduce((s, p) => s + p.w, 0);
-    let r = Math.random() * total;
-    for (const p of PALETTE) { r -= p.w; if (r <= 0) return p; }
-    return PALETTE[0];
-  }
-
   function createParticle(init) {
-    const pal = weightedPalette();
-    const isBig = Math.random() < 0.08;
+    // Pick a zone (weighted)
+    const totalW = ZONES.reduce((s, z) => s + z.weight, 0);
+    let r = Math.random() * totalW;
+    let zone = ZONES[0];
+    for (const z of ZONES) { r -= z.weight; if (r <= 0) { zone = z; break; } }
+
+    // Scatter around zone center
+    const spread = 0.15;
+    const x = (zone.cx + (Math.random() - 0.5) * spread) * W;
+    const isBig = Math.random() < 0.10;
+
     return {
-      x: Math.random() * W,
-      y: init ? Math.random() * H : H + 10,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: -(0.06 + Math.random() * 0.22),
-      r: isBig ? (2 + Math.random() * 2.5) : (0.6 + Math.random() * 1.6),
-      opacity: isBig ? (0.25 + Math.random() * 0.2) : (0.1 + Math.random() * 0.2),
-      hue: pal.h + (Math.random() - 0.5) * 12,
-      sat: pal.s,
-      lightness: pal.l,
+      x: init ? (zone.cx + (Math.random() - 0.5) * spread) * W : x,
+      y: init ? Math.random() * H : H * 0.9 + Math.random() * H * 0.1,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -(0.08 + Math.random() * 0.25),
+      r: isBig ? (2.5 + Math.random() * 2.5) : (0.6 + Math.random() * 1.8),
+      opacity: isBig ? (0.25 + Math.random() * 0.25) : (0.10 + Math.random() * 0.22),
+      color: zone.color,
       life: init ? Math.random() * 400 : 0,
       maxLife: 300 + Math.random() * 500,
       twinkleSpeed: 0.015 + Math.random() * 0.03,
@@ -545,63 +349,54 @@
     alpha *= 0.7 + 0.3 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
     if (alpha <= 0.01) return;
 
+    const [cr, cg, cb] = p.color;
+
     pCtx.beginPath();
     pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha})`;
+    pCtx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${alpha})`;
     pCtx.fill();
 
     // Halo
     pCtx.beginPath();
     pCtx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2);
-    pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.15})`;
+    pCtx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${alpha * 0.15})`;
     pCtx.fill();
 
     if (p.isBig) {
       pCtx.beginPath();
       pCtx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
-      pCtx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lightness}%, ${alpha * 0.05})`;
+      pCtx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${alpha * 0.05})`;
       pCtx.fill();
     }
   }
 
-  // ── ENERGY STREAMS — connecting the three cards ──
+  // ── ENERGY STREAMS — connecting the three zones ──
   let energyTime = 0;
 
-  // Card centers (approximate, based on card-row layout in bottom 40% of slide)
   const anchors = [
-    { x: 0.20, y: 0.75 },   // card 1 center (green)
-    { x: 0.50, y: 0.75 },   // card 2 center (amber)
-    { x: 0.80, y: 0.75 },   // card 3 center (red)
-    { x: 0.50, y: 0.28 },   // title area (nexus)
-    { x: 0.08, y: 0.15 },   // top-left corner
-    { x: 0.92, y: 0.15 },   // top-right corner
-    { x: 0.08, y: 0.92 },   // bottom-left
-    { x: 0.92, y: 0.92 },   // bottom-right
+    { x: 0.17, y: 0.55 },  // green zone center
+    { x: 0.50, y: 0.55 },  // amber zone center
+    { x: 0.83, y: 0.55 },  // red zone center
+    { x: 0.50, y: 0.12 },  // title nexus
+    { x: 0.17, y: 0.10 },  // green beam top
+    { x: 0.83, y: 0.10 },  // red beam top
   ];
 
   const connections = [
-    // Cards to each other
-    [0, 1], [1, 2], [0, 2],
-    // Cards to title nexus
-    [0, 3], [1, 3], [2, 3],
-    // Nexus to corners
-    [3, 4], [3, 5],
-    // Card edges to corners
-    [0, 6], [2, 7],
+    [0, 1], [1, 2], [0, 2],  // zones to each other
+    [0, 3], [1, 3], [2, 3],  // zones to title
+    [3, 4], [3, 5],          // title to beam tops
   ];
 
-  // Color per connection — matches the dominant card
   const connColors = [
-    [143, 170, 107],  // 0-1: green→amber
-    [212, 165, 116],  // 1-2: amber→red
-    [176, 96, 96],    // 0-2: green→red (diagonal)
-    [143, 170, 107],  // 0-nexus
-    [212, 165, 116],  // 1-nexus
-    [176, 96, 96],    // 2-nexus
-    [143, 170, 107],  // nexus-TL
-    [176, 96, 96],    // nexus-TR
-    [143, 170, 107],  // card0-BL
-    [176, 96, 96],    // card2-BR
+    [143, 170, 107],  // green-amber
+    [212, 165, 116],  // amber-red
+    [176, 96, 96],    // green-red
+    [143, 170, 107],  // green-title
+    [212, 165, 116],  // amber-title
+    [176, 96, 96],    // red-title
+    [143, 170, 107],  // title-greenTop
+    [176, 96, 96],    // title-redTop
   ];
 
   function drawEnergyStreams(time) {
@@ -616,12 +411,11 @@
       const by = anchors[b].y * H;
       const col = connColors[ci];
 
-      const thickness = 0.4 + 1.2 * (0.5 + 0.5 * Math.sin(energyTime * 2.2 + ci * 0.8));
-      const baseAlpha = 0.03 + 0.03 * Math.sin(energyTime * 1.8 + ci * 1.1);
+      const thickness = 0.4 + 1.0 * (0.5 + 0.5 * Math.sin(energyTime * 2.2 + ci * 0.8));
+      const baseAlpha = 0.025 + 0.025 * Math.sin(energyTime * 1.8 + ci * 1.1);
 
-      // Control point for curve
-      const mx = (ax + bx) / 2 + Math.sin(energyTime * 1.4 + a) * W * 0.025;
-      const my = (ay + by) / 2 + Math.cos(energyTime * 1.1 + b) * H * 0.025;
+      const mx = (ax + bx) / 2 + Math.sin(energyTime * 1.4 + a) * W * 0.02;
+      const my = (ay + by) / 2 + Math.cos(energyTime * 1.1 + b) * H * 0.02;
 
       eCtx.beginPath();
       eCtx.moveTo(ax, ay);
